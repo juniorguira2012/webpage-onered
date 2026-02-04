@@ -1,12 +1,18 @@
+version: '3.8'
 services:
   web-onered:
     build: .
     container_name: webpage-onered
-    ports:
-      - "3000:3000"
     restart: always
-    # Si usas Traefik en tu servidor, añade estas etiquetas:
+    networks:
+      - network_public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.onered.rule=Host(`oneredrd.com`) || Host(`www.oneredrd.com`)"
+      - "traefik.http.routers.onered.entrypoints=websecure"
+      - "traefik.http.routers.onered.tls.certresolver=letsencryptresolver"
       - "traefik.http.services.onered.loadbalancer.server.port=3000"
+
+networks:
+  network_public:
+    external: true
