@@ -1,15 +1,19 @@
-FROM node:18-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+# Usamos una versión ligera de Node
+FROM node:20-slim
 
-FROM node:18-alpine
+# Directorio de trabajo
 WORKDIR /app
+
+# Copiamos solo lo necesario para que el servidor funcione
 COPY package*.json ./
-RUN npm install --omit=dev
-COPY --from=build /app/dist ./dist
+RUN npm install --production
+
+# Copiamos tu carpeta dist (el React ya compilado) y el server.js
+COPY dist ./dist
 COPY server.js ./
+
+# Exponemos el puerto que configuraste
 EXPOSE 3000
+
+# Arrancamos el servidor
 CMD ["node", "server.js"]

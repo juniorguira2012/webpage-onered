@@ -1,26 +1,3 @@
-# Dependencias locales (Docker las instalará adentro)
 node_modules
 npm-debug.log
-
-# Artefactos de construcción locales
-dist
-build
-
-# Control de versiones
 .git
-.gitignore
-
-# Archivos de entorno y secretos (¡Muy importante!)
-.env
-.env.local
-.aws
-.ssh
-
-# Docker logs y archivos propios
-Dockerfile
-.dockerignore
-docker-compose.yml
-
-# Archivos del Sistema Operativo
-.DS_Store
-Thumbs.db
