@@ -1,7 +1,12 @@
 services:
   web-onered:
-    image: nginx:alpine
+    build: .
     container_name: webpage-onered
     ports:
-      - "8080:80"
+      - "3000:3000"
     restart: always
+    # Si usas Traefik en tu servidor, añade estas etiquetas:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.onered.rule=Host(`oneredrd.com`) || Host(`www.oneredrd.com`)"
+      - "traefik.http.services.onered.loadbalancer.server.port=3000"
