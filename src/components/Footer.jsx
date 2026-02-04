@@ -1,5 +1,4 @@
 import { Facebook, Instagram, Linkedin, Music2 ,Mail, Phone } from 'lucide-react';
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -44,11 +43,7 @@ export default function Footer() {
   rel="noopener noreferrer"
   className="w-10 h-10 bg-white border border-slate-200 rounded-xl flex items-center justify-center hover:bg-black group transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-slate-200"
 >
-  <img 
-    src="public/assets/icons/tik-tok.png" 
-    alt="TikTok OneRedRD" 
-    className="w-5 h-5 transition-all duration-300 group-hover:invert group-hover:brightness-200"
-  />
+  <Music2 size={20} strokeWidth={2} />
 </a>
 
   {/* LinkedIn
