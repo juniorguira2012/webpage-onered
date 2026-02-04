@@ -22,23 +22,24 @@ export default function Navbar() {
   return (
     // Reducimos h-20 a h-16 en móvil (h-16 md:h-20)
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100 h-16 md:h-20 transition-all">
-      <div className="flex justify-between items-center px-4 md:px-12 h-full max-w-[1400px] mx-auto">
-        
+      <div className="flex justify-between items-center px-4 md:px-12 h-full max-w-[1400px] mx-auto"> 
         {/* Lado Izquierdo: Menú + Logo */}
-        <div className="flex items-center gap-1 md:gap-2">
+        <div className="flex items-center gap-1 md:gap-2 relative h-full">
           <button 
             onClick={() => setMenuMovilOpen(!menuMovilOpen)}
-            className="lg:hidden p-1.5 text-slate-600 hover:text-blue-600 transition"
+            className="lg:hidden p-1.5 text-slate-600 hover:text-blue-600 transition z-10"
           >
             {menuMovilOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           
-          <a href="#" className="relative block group">
+          <a href="#" className="relative block group h-full flex items-center">
             <img
               src={logo} 
               alt="OneRedRD Logo" 
-              // Reducimos altura del logo en móvil (h-10 md:h-16)
-              className="h-10 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              // h-16 en móvil y md:h-32 en desktop para que resalte de verdad
+              // La clase 'max-h-none' es clave para que no lo limite el nav
+              className="h-16 md:h-32 w-auto object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-sm"
+              style={{ maxWidth: 'none' }} 
             />
           </a>
         </div>
