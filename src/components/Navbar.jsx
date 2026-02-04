@@ -46,7 +46,7 @@ export default function Navbar() {
         
         {/* Menú Central (Desktop) */}
         <div className="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest text-slate-500">
-          <a href="#inicio" className="hover:text-blue-600 transition">Inicio</a>
+          <a href="#" className="hover:text-blue-600 transition">Inicio</a>
           <a href="#nosotros" className="hover:text-blue-600 transition">Nosotros</a>
           <a href="#cobertura" className="hover:text-blue-600 transition">Cobertura</a>
           <a href="#planes" className="hover:text-blue-600 transition">Planes</a>
