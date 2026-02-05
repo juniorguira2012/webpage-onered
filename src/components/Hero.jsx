@@ -87,7 +87,7 @@ const OFERTAS_MENSUALES = {
     link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
   },
   11: { 
-    titulo: "Diciembre Navidad 🎄:", 
+    titulo: "Feliz Navidad 🎄:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
     link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
   }
