@@ -113,7 +113,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-blue-600 transition-colors cursor-pointer"
               >
-                <span>Los Alcarrizos, Calle Lebrón 60, Santo Domingo</span>
+                <span>Los Alcarrizos, Calle Lebrón #60, Santo Domingo</span>
               </a>
             </li>
               
@@ -153,11 +153,15 @@ export default function Footer() {
         </div>
 
         {/* Línea final y Copyright */}
-        <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+        <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest text-center md:text-left">
+          
+          {/* Copyright: Se centra en móvil por defecto del flex-col + items-center */}
           <p>© {currentYear} OneRed - Todos los derechos reservados.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-slate-600">Privacidad</a>
-            <a href="#" className="hover:text-slate-600">Términos</a>
+          
+          {/* Links: Cambiamos flex-row a flex-col en móvil para efecto lista */}
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+            <a href="#nosotros" className="hover:text-slate-600 transition-colors">Privacidad</a>
+            <a href="#nosotros" className="hover:text-slate-600 transition-colors">Términos</a>
           </div>
         </div>
       </div>
