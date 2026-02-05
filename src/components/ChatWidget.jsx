@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 const ChatWidget = () => {
   useEffect(() => {
+    // 1. Estilos: WhatsApp siempre visible, sin X, sin rotación
     const style = document.createElement("style");
     style.innerHTML = `
       .woot-widget-bubble {
@@ -22,6 +23,7 @@ const ChatWidget = () => {
     `;
     document.head.appendChild(style);
 
+    // 2. Carga del SDK
     (function(d, t) {
       var BASE_URL = "https://chatone.oneredrd.com";
       var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -35,34 +37,24 @@ const ChatWidget = () => {
       };
     })(document, "script");
 
-    const handleInteraction = (event) => {
-      // Solo actuar si el SDK existe y el chat está abierto
-      if (window.$chatwoot && typeof window.$chatwoot.isOpen === 'function' && window.$chatwoot.isOpen()) {
-        const widgetHolder = document.querySelector('.woot-widget-holder');
+    // 3. Lógica de interruptor (Toggle) en el icono
+    const handleBubbleClick = (event) => {
+      if (window.$chatwoot && window.$chatwoot.isOpen()) {
         const widgetBubble = document.querySelector('.woot-widget-bubble');
-
-        // 1. Detectar si el clic fue en la BURBUJA
+        
+        // Si el clic es en el icono mientras está abierto, forzamos el cierre
         if (widgetBubble && widgetBubble.contains(event.target)) {
-          // Bloqueamos el evento original de Chatwoot para mandar nosotros el cierre
           event.stopImmediatePropagation();
           event.preventDefault();
-          window.$chatwoot.toggle("close");
-          return; // Salimos para no ejecutar la lógica de "clic fuera"
-        }
-
-        // 2. Detectar si el clic fue FUERA del panel de mensajes (en cualquier parte de la web)
-        if (widgetHolder && !widgetHolder.contains(event.target)) {
-          // No bloqueamos aquí para que la web siga siendo interactiva, solo cerramos el chat
           window.$chatwoot.toggle("close");
         }
       }
     };
 
-    // Usamos 'mousedown' en fase de captura (true) para interceptar el clic antes que el SDK
-    document.addEventListener('mousedown', handleInteraction, true);
+    document.addEventListener('mousedown', handleBubbleClick, true);
     
     return () => {
-      document.removeEventListener('mousedown', handleInteraction, true);
+      document.removeEventListener('mousedown', handleBubbleClick, true);
     };
   }, []);
 
