@@ -17,7 +17,7 @@ export default function Nosotros() {
     },
     { 
       titulo: "Valores", 
-      desc: "Integridad (actuamos conforme a las leyes) ,Innovación(vanguardia tecnológica),Flexibilidad(adaptación a las necesidades) y Compromiso con nuestros clientes y colaboradores.", 
+      desc: "Integridad (actuamos conforme a las leyes),Innovación (vanguardia tecnológica), Flexibilidad (adaptación a las necesidades) y Compromiso con nuestros clientes y colaboradores.", 
       icon: <HeartHandshake size={32} className="text-blue-600" strokeWidth={2} /> 
     }
 ];
@@ -98,17 +98,16 @@ export default function Nosotros() {
                   size: 32 
                 })}
               </div>
-
               {/* Título */}
               <h3 className="text-2xl font-black text-slate-800 mb-4 tracking-tighter">
                 {pilar.titulo}
               </h3>
 
               {/* Descripción Justificada */}
-              <p className="text-slate-500 text-sm leading-relaxed text-justify hyphens-auto">
+              {/* Cambiamos text-justify por text-center para que el texto fluya natural */}
+              <p className="text-slate-500 text-sm leading-relaxed text-justify [text-justify:inter-word] hyphens-auto">
                 {pilar.desc}
               </p>
-              
             </div>
           ))}
         </div>
