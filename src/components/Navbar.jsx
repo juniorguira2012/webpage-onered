@@ -51,7 +51,7 @@ export default function Navbar() {
           <a href="#cobertura" className="hover:text-blue-600 transition">Cobertura</a>
           <a href="#planes" className="hover:text-blue-600 transition">Planes</a>
           <a href="#contacto" className="hover:text-blue-600 transition">Contacto</a>
-          <a href="https://www.instagram.com/oneredrd/" target="_blank" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
+          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" target="_blank" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
             Novedades <ExternalLink size={12} className="opacity-50" />
           </a>
         </div>
