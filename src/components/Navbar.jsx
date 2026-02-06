@@ -51,7 +51,7 @@ export default function Navbar() {
           <a href="#cobertura" className="hover:text-blue-600 transition">Cobertura</a>
           <a href="#planes" className="hover:text-blue-600 transition">Planes</a>
           <a href="#contacto" className="hover:text-blue-600 transition">Contacto</a>
-          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" target="_blank" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
+          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
             Novedades <ExternalLink size={12} className="opacity-50" />
           </a>
         </div>
@@ -103,7 +103,7 @@ export default function Navbar() {
           <a href="#cobertura" onClick={() => setMenuMovilOpen(false)} className="py-2 border-b border-slate-50 hover:text-blue-600">Cobertura</a>
           <a href="#planes" onClick={() => setMenuMovilOpen(false)} className="py-2 border-b border-slate-50 hover:text-blue-600">Planes</a>
           <a href="#contacto" onClick={() => setMenuMovilOpen(false)} className="py-2 border-b border-slate-50 hover:text-blue-600">Contacto</a>
-          <a href="https://www.instagram.com/oneredrd/" className="py-2 flex items-center justify-between hover:text-blue-600">
+          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" className="py-2 flex items-center justify-between hover:text-blue-600">
             Novedades <ExternalLink size={16} />
           </a>
         </div>

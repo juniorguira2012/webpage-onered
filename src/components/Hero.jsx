@@ -4,11 +4,11 @@ import { User } from "lucide-react";
 
 // 1. Inporancion de Imagenes
 import img1 from "/public/assets/images/plan1.jpg";
-import img2 from "/public/assets/images/plan2.png";
-import img3 from "/public/assets/images/plan3.png";
-import img4 from "/public/assets/images/plan4.jpg";
-import img5 from "/public/assets/images/plan5.jpg";
-import img6 from "/public/assets/images/plan6.jpg";
+import img2 from "/public/assets/images/plan2.jpeg";
+import img3 from "/public/assets/images/plan3.jpeg";
+import img4 from "/public/assets/images/plan4.jpeg";
+import img5 from "/public/assets/images/plan5.jpeg";
+import img6 from "/public/assets/images/plan6.jpeg";
 
 const imagenes = [img1, img2, img3, img4, img5, img6];
 
@@ -34,62 +34,62 @@ const OFERTAS_MENSUALES = {
   0: { 
     titulo: "Enero Día de los Reyes Magos🤴🏽🚂:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   1: { 
     titulo: "Febrero Mes de la Patria 🇩🇴:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   2: { 
     titulo: "Batalla del 30 de Marzo ⚔️:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   3: { 
     titulo: "Revolución del 24 de Abril ⚔️:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   4: { 
     titulo: "Mayo Día de las Madres 🤰:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   5: { 
     titulo: "Junio Día del Maestro 👨🏽‍🏫:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   6: { 
     titulo: "Julio Día del Padre 👨🏽:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   7: { 
     titulo: "Agosto Día de la Restauración:🗣️", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   8: { 
     titulo: "Septiembre Mes de la Biblia 📚:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   9: { 
     titulo: "Octubre Día de la raza 🧑‍🧑‍🧒‍🧒:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   10: { 
     titulo: "Noviembre Día de la Constitución:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   },
   11: { 
     titulo: "Feliz Navidad 🎄:", 
     promo: <>Aumenta de 6 a 30 Mbps por solo <span className="font-black underline ">RD$300</span> adicionales</>,
-    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/informacion"
+    link: "https://chatone.oneredrd.com/hc/onered/es_DO/categories/oferta"
   }
 };
 
