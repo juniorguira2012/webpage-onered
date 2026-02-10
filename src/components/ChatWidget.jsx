@@ -1,8 +1,11 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Importamos el hook
 
 const ChatWidget = () => {
+  const { i18n } = useTranslation();
+
+  // 1. Efecto para la carga inicial y estilos (Solo una vez)
   useEffect(() => {
-    // 1. Estilos: WhatsApp siempre visible, sin X, sin rotación
     const style = document.createElement("style");
     style.innerHTML = `
       .woot-widget-bubble {
@@ -23,7 +26,6 @@ const ChatWidget = () => {
     `;
     document.head.appendChild(style);
 
-    // 2. Carga del SDK
     (function(d, t) {
       var BASE_URL = "https://chatone.oneredrd.com";
       var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -37,12 +39,9 @@ const ChatWidget = () => {
       };
     })(document, "script");
 
-    // 3. Lógica de interruptor (Toggle) en el icono
     const handleBubbleClick = (event) => {
       if (window.$chatwoot && window.$chatwoot.isOpen()) {
         const widgetBubble = document.querySelector('.woot-widget-bubble');
-        
-        // Si el clic es en el icono mientras está abierto, forzamos el cierre
         if (widgetBubble && widgetBubble.contains(event.target)) {
           event.stopImmediatePropagation();
           event.preventDefault();
@@ -52,11 +51,18 @@ const ChatWidget = () => {
     };
 
     document.addEventListener('mousedown', handleBubbleClick, true);
-    
-    return () => {
-      document.removeEventListener('mousedown', handleBubbleClick, true);
-    };
+    return () => document.removeEventListener('mousedown', handleBubbleClick, true);
   }, []);
+
+  // 2. NUEVO: Efecto para cambiar el idioma del chat en tiempo real
+  useEffect(() => {
+    if (window.$chatwoot) {
+      // Chatwoot usa códigos de idioma estándar (es, en, fr)
+      // Si tu i18n usa 'en-US', .split('-')[0] lo limpia a 'en'
+      const lang = i18n.language.split('-')[0];
+      window.$chatwoot.setLocale(lang);
+    }
+  }, [i18n.language]); // Se ejecuta cada vez que cambias el idioma en la web
 
   return null;
 };

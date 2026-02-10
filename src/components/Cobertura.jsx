@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next'; // Importamos el hook
 
 export default function Cobertura() {
+  const { t } = useTranslation();
   const [sectorAbierto, setSectorAbierto] = useState(null);
 
   const datosSectores = [
@@ -62,14 +64,14 @@ export default function Cobertura() {
     <section id="cobertura" className="py-24 bg-white px-6">
       <div className="max-w-7xl mx-auto">
         
-        {/* TITULO RESTAURADO */}
+        {/* TITULO TRADUCIDO */}
         <div className="text-center mb-16">
-          <span className="text-blue-600 font-black uppercase tracking-widest text-sm">Nuestra Red</span>
+          <span className="text-blue-600 font-black uppercase tracking-widest text-sm">{t('cob_red', 'Nuestra Red')}</span>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 mt-2">
-            Cobertura <span className="text-blue-600">Los Alcarrizos</span>
+            {t('cob_titulo', 'Cobertura')} <span className="text-blue-600">Los Alcarrizos</span>
           </h2>
           <p className="text-slate-500 mt-4 text-lg max-w-2xl mx-auto">
-            Haz clic en tu sector para ver el mapa de disponibilidad de fibra óptica.
+            {t('cob_desc', 'Haz clic en tu sector para ver el mapa de disponibilidad de fibra óptica.')}
           </p>
         </div>
 
@@ -99,7 +101,7 @@ export default function Cobertura() {
                   <div className="p-2 bg-white rounded-2xl border-2 border-blue-200 shadow-lg">
                     <img 
                       src={`/assets/sectores/${item.imagen}`} 
-                      alt={`Mapa ${item.nombre}`}
+                      alt={`${t('cob_mapa_de', 'Mapa')} ${item.nombre}`}
                       className="w-full h-48 object-cover rounded-xl"
                       onError={(e) => { 
                         e.target.style.display = 'none'; 
@@ -111,8 +113,12 @@ export default function Cobertura() {
                       className="w-full h-48 bg-blue-50 rounded-xl flex flex-col items-center justify-center text-blue-400 border border-blue-100"
                     >
                       <span className="text-3xl mb-2">📍</span>
-                      <p className="text-xs font-bold uppercase tracking-wider text-blue-800">Mapa de {item.nombre}</p>
-                      <p className="text-[10px] mt-1 text-blue-400 italic">Cargando disponibilidad...</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-blue-800">
+                        {t('cob_mapa_de', 'Mapa de')} {item.nombre}
+                      </p>
+                      <p className="text-[10px] mt-1 text-blue-400 italic">
+                        {t('cob_cargando', 'Cargando disponibilidad...')}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -121,13 +127,13 @@ export default function Cobertura() {
           </div>
         </div>
 
-        {/* Botón de Chatwoot */}
+        {/* Botón de Ayuda Traducido */}
         <div 
           onClick={abrirChat} 
           className="mt-12 cursor-pointer text-center bg-blue-50 p-8 rounded-3xl border-2 border-dashed border-blue-200 hover:bg-blue-100 transition-all active:scale-95"
         >
           <p className="text-blue-800 font-bold flex items-center justify-center gap-2">
-            <span>💬</span> ¿No ves tu sector? ¡Contáctanos! Estamos expandiendo nuestra red cada día.
+            <span>💬</span> {t('cob_ayuda', '¿No ves tu sector? ¡Contáctanos! Estamos expandiendo nuestra red cada día.')}
           </p>
         </div>
 

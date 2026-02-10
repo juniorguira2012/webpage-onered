@@ -1,13 +1,14 @@
 import { Headset, MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next'; // Importamos el hook
 
 export default function Contacto() {
+  const { t } = useTranslation();
   
   // Función para abrir el chat de Chatwoot
   const abrirChat = () => {
     if (window.$chatwoot) {
       window.$chatwoot.toggle("open");
     } else {
-      // Si por alguna razón no ha cargado, lo mandamos al link del bot como respaldo
       window.open("https://bot.oneredrd.com/instalacion-web-os0tv2w", "_blank");
     }
   };
@@ -22,8 +23,8 @@ export default function Contacto() {
         </div>
 
         <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase italic mb-6">
-          ¿Tienes dudas? <br />
-          <span className="text-blue-200">¡Chatea con nosotros!</span>
+          {t('cont_titulo_1', '¿Tienes dudas?')} <br />
+          <span className="text-blue-200">{t('cont_titulo_2', '¡Chatea con nosotros!')}</span>
         </h2>
 
         {/* Botón que activa el Chat */}
@@ -32,7 +33,7 @@ export default function Contacto() {
             onClick={abrirChat}
             className="group inline-flex items-center gap-4 bg-white text-blue-600 px-10 py-6 rounded-3xl font-black text-xl uppercase tracking-tighter shadow-2xl hover:bg-blue-50 transition-all active:scale-95 cursor-pointer"
           >
-            Hablar con un Agente
+            {t('cont_boton', 'Hablar con un Agente')}
             <MessageSquare size={24} className="group-hover:rotate-12 transition-transform" strokeWidth={3} />
           </button>
         </div>
@@ -43,7 +44,9 @@ export default function Contacto() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
           </span>
-          <span className="text-blue-100 text-xs font-black uppercase tracking-widest">Atención al cliente en vivo</span>
+          <span className="text-blue-100 text-xs font-black uppercase tracking-widest">
+            {t('cont_estado', 'Atención al cliente en vivo')}
+          </span>
         </div>
 
       </div>
