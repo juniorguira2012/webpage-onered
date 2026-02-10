@@ -110,7 +110,7 @@ export default function Navbar() {
                   <FileUp size={18}/>
                   {t('nav_aplicar_comprobantes', 'Aplicar Comprobantes')}
                 </a>
-                <a href="https://bot.oneredrd.com/aplicar-pago-web" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
+                <a href="https://bot.oneredrd.com/consultafactura" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
                   <Search size={18}/>
                   {t('nav_verificar_factura', 'Verificar Factura')}
                 </a>

@@ -7,8 +7,8 @@ export default function LanguageSelector() {
   const [showLangs, setShowLangs] = useState(false);
 
   return (
-    <div className="fixed top-24 right-6 z-[9999]"> 
-      {/* z-[9999] para que siempre esté por encima de todo */}
+    /* Cambiamos right-6 por left-6 */
+    <div className="fixed top-24 left-6 z-[9999]"> 
       <div className="relative">
         <button 
           onClick={() => setShowLangs(!showLangs)}
@@ -22,7 +22,8 @@ export default function LanguageSelector() {
         </button>
 
         {showLangs && (
-          <div className="absolute right-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in duration-200">
+          /* Cambiamos right-0 por left-0 para que el menú despliegue hacia la derecha */
+          <div className="absolute left-0 mt-3 w-40 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in duration-200">
             {[
               { code: 'es', label: 'Español', flag: '🇩🇴' },
               { code: 'en', label: 'English', flag: '🇺🇸' },
