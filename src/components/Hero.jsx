@@ -53,7 +53,7 @@ export default function Hero() {
   const ofertaDelMes = OFERTAS_MENSUALES[mesActual] || OFERTA_DEFAULT;
 
   return (
-    <header className="relative overflow-hidden pt-16 pb-24 md:pt-32 md:pb-40 px-6">
+    <header className="relative overflow-hidden pt-10 pb-24 md:pt-24 md:pb-40 px-6">
       <div id="inicio" className="absolute top-0 right-0 -z-10 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4"></div>
       
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">

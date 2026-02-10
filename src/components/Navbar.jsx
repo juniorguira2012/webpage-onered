@@ -2,11 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { User, ShieldCheck, FileUp, Search, ExternalLink, Menu, X } from "lucide-react"; 
 import logo from "/public/assets/logos/logo-onered.png";
 import { useTranslation } from 'react-i18next';
+// Asegúrate de importar tu componente de selector de idiomas
+import LanguageSelector from "./LanguageSelector"; 
 
 export default function Navbar() {
   const { t } = useTranslation();
 
-  // Definimos los items del menú para usarlos tanto en desktop como en móvil
   const menuItems = [
     { name: t('nav_inicio', 'Inicio'), href: '#' },
     { name: t('nav_nosotros', 'Nosotros'), href: '#nosotros' },
@@ -54,7 +55,7 @@ export default function Navbar() {
           </a>
         </div>
         
-        {/* Menú Central (Desktop) - Ahora usa el array traducido */}
+        {/* Menú Central (Desktop) */}
         <div className="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest text-slate-500">
           {menuItems.map((item) => (
             <a key={item.name} href={item.href} className="hover:text-blue-600 transition">
@@ -69,6 +70,9 @@ export default function Navbar() {
         {/* Lado Derecho */}
         <div className="flex items-center gap-1 md:gap-4">
           
+          {/* INTEGRACIÓN DEL BOTÓN DE IDIOMA */}
+          <LanguageSelector />
+
           {/* Botón Mi Cuenta */}
           <div className="relative" ref={cuentaRef}>
             <button 
@@ -120,7 +124,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Menú Sándwich (Móvil) - Ahora usa el array traducido */}
+      {/* Menú Sándwich (Móvil) */}
       <div className={`lg:hidden absolute top-16 w-full bg-white border-b shadow-xl transition-all duration-300 ease-in-out ${menuMovilOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         <div className="flex flex-col p-6 gap-4 font-bold text-sm uppercase tracking-widest text-slate-600">
           {menuItems.map((item) => (
