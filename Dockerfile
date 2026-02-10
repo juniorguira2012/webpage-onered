@@ -26,7 +26,7 @@ WORKDIR /app
 
 # TRUCO: Cambia este número cada vez que quieras forzar un refresh de Git
 # OTRO TRUCO: Utilizaremos fechas 20260206 para los cambio en git en ves dew 1,2,3.
-ENV CACHE_BYPASS=20260206
+ENV CACHE_BYPASS=20260210
 
 # Borramos y clonamos (ahora Docker no usará la caché por la variable de arriba)
 RUN rm -rf ./* && git clone https://github.com/juniorguira2012/webpage-onered.git .
