@@ -71,7 +71,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-slate-600 font-medium">
               <li className="flex items-start gap-2 group">
                 <span className="mt-1">📍</span>
-                <a href="https://maps.google.com/?q=Calle+Lebrón+60+Los+Alcarrizos" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors cursor-pointer">
+                <a href="https://maps.app.goo.gl/WjjXhKTFPsJiVMX69" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors cursor-pointer">
                   <span>{t('footer_direccion', 'Los Alcarrizos, Calle Lebrón #60, Santo Domingo')}</span>
                 </a>
               </li>

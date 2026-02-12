@@ -22,3 +22,12 @@ html {
   animation: entradaDerecha 0.8s ease-out forwards;
   animation-delay: 0.2s; /* Un poquito después */
 }
+@keyframes heart-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); } /* El impulso */
+  100% { transform: scale(1); }
+}
+
+.animate-impulso {
+  animation: heart-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

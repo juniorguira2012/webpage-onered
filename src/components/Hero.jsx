@@ -128,7 +128,10 @@ export default function Hero() {
         <div className="relative">
           <div className="absolute -top-10 -left-10 bg-white p-5 rounded-[2rem] shadow-xl z-20 border border-slate-50 animate-bounce-slow">
             <div className="flex items-center gap-4">
-              <ArrowLeftRight size={28} className="text-blue-500" />
+              <ArrowLeftRight 
+                size={28} 
+                className="text-blue-500 hover:scale-125 animate-impulso transition-transform" 
+              />
               <div className="flex flex-col">
                 <span className="text-[10px] font-black text-slate-400 uppercase">{t('real_time', 'En tiempo real')}</span>
                 <div className="flex items-baseline gap-1">
