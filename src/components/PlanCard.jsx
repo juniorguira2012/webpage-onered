@@ -48,7 +48,7 @@ export default function PlanCard({ nombre, bajada, subida, precio, destacado = f
         </div>
         
         <a 
-          href="https://bot.oneredrd.com/instalacion-web-os0tv2w" 
+          href="https://bot.oneredrd.com/agendar-instalacion-shortcut" 
           rel="noopener noreferrer"
           className="block w-full cursor-pointer"
         >

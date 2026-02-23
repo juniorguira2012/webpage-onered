@@ -37,7 +37,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-slate-600 font-medium">
               <li><a href="#planes" className="hover:text-blue-600 transition">{t('footer_residencial', 'Internet Residencial')}</a></li>
               <li><a href="#planes" className="hover:text-blue-600 transition">{t('footer_negocio', 'Planes de Negocio')}</a></li>
-              <li><a href="#planes" className="hover:text-blue-600 transition">{t('footer_dedicada', 'Fibra Dedicada')}</a></li>
+              <li><a href="#planes" className="hover:text-blue-600 transition">{t('footer_dedicada', 'Internet Dedicado')}</a></li>
               <li><a href="#cobertura" className="hover:text-blue-600 transition">{t('footer_consulta_cob', 'Consulta Cobertura')}</a></li>
             </ul>
           </div>
@@ -51,7 +51,7 @@ export default function Footer() {
                   {t('footer_centro_ayuda', 'Centro de Ayuda')}
                 </button>
               </li>
-              <li><a href="https://bot.oneredrd.com/aplicar-pago-web" className="hover:text-blue-600 transition">{t('footer_pagar', 'Pagar Factura')}</a></li>
+              <li><a href="https://bot.oneredrd.com/aplicar-pago-shortcut" className="hover:text-blue-600 transition">{t('footer_pagar', 'Pagar Factura')}</a></li>
               <li>
                 <button onClick={() => window.$chatwoot?.toggle("open")} className="hover:text-blue-600 transition cursor-pointer font-medium bg-transparent border-none p-0 text-left">
                   {t('footer_reportar', 'Reportar Avería')}

@@ -5,6 +5,7 @@ import Features from './components/Features';
 import Cobertura from './components/Cobertura';
 import Planes from './components/Planes';
 import Contacto from './components/Contacto';
+import LocationMap from './components/LocationMap';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import LanguageSelector from './components/LanguageSelector';
@@ -25,6 +26,7 @@ function App() {
       <Cobertura />
       <Planes />
       <Contacto />
+      <LocationMap />
       <Footer />
       <ChatWidget />
       {/* <WhatsAppBtn /> */}

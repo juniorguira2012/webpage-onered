@@ -84,7 +84,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row gap-5 items-start sm:items-center">
-            <a href="https://bot.oneredrd.com/instalacion-web-os0tv2w" className="inline-block bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-700 transition-all hover:scale-105 shadow-2xl shadow-blue-300 text-center">
+            <a href="https://bot.oneredrd.com/agendar-instalacion-shortcut" className="inline-block bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-700 transition-all hover:scale-105 shadow-2xl shadow-blue-300 text-center">
               {t('btn_solicitar', 'Solicitar Ahora')}
             </a>
             
