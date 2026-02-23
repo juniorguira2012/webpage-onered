@@ -34,9 +34,15 @@ export default function LocationMap() {
                   <Clock className="text-blue-600" size={20} />
                 </div>
                 <div className="text-sm text-slate-600">
-                  <p className="font-bold text-slate-900">{t('map_horario', 'Horario de atención:')}</p>
-                  <p>Lunes a Viernes: 9:00 AM – 6:00 PM</p>
-                  <p>Sábados: 9:00 AM – 1:00 PM</p>
+                  <p className="font-bold text-slate-900">
+                    {t('map_horario_titulo', 'Horario de atención:')}
+                  </p>
+                  <p>
+                    {t('map_horario_semana', 'Lunes a Viernes: 9:00 AM – 6:00 PM')}
+                  </p>
+                  <p>
+                    {t('map_horario_sabado', 'Sábados: 9:00 AM – 1:00 PM')}
+                  </p>
                 </div>
               </div>
             </div>

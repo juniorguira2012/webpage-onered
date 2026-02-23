@@ -140,6 +140,16 @@ i18n
             "cont_boton": "Talk to an Agent",
             "cont_estado": "Live Customer Support",
 
+            //Map Locacion
+            "map_visitanos": "Visit our main office",
+            "map_horario_titulo": "Business hours:",
+            "map_horario_semana": "Monday to Friday: 9:00 AM – 6:00 PM",
+            "map_horario_sabado": "Saturdays: 9:00 AM – 1:00 PM",
+            "map_como_llegar": "How to get there",
+            
+            //Chat Widget
+            "chat_agente": "Talk to an agent",
+
             //--Footer
             "footer_eslogan": "Bringing the best connectivity to every corner. Real fiber optics for Dominican homes and businesses.",
             "footer_servicios": "Services",
@@ -255,6 +265,16 @@ i18n
         "cont_titulo_2": "Discutez avec nous !",
         "cont_boton": "Parler à un agent",
         "cont_estado": "Service client en direct",
+
+        //map locacion
+        "map_visitanos": "Visitez notre bureau principal",
+        "map_horario_titulo": "Heures d'ouverture :",
+        "map_horario_semana": "Lundi au Vendredi : 09h00 – 18h00",
+        "map_horario_sabado": "Samedi : 09h00 – 13h00",
+        "map_como_llegar": "Comment arriver",
+        
+        //chat widget
+        "chat_agente": "Parler à un agent",
 
         //--Footer
         "footer_eslogan": "Apporter la meilleure connectivité dans chaque coin. Véritable fibre optique pour les foyers et entreprises dominicaines.",
