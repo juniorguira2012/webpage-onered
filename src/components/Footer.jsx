@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Columna 1: Marca y Eslogan */}
           <div className="space-y-4">
             <div className="text-2xl font-black tracking-tighter text-blue-600">
-              OneRed<span className="text-slate-800"></span>
+              ONERED<span className="text-slate-800"></span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed">
               {t('footer_eslogan', 'Llevando la mejor conectividad a cada rincón. Fibra óptica real para hogares y empresas dominicanas.')}
@@ -95,7 +95,7 @@ export default function Footer() {
 
         {/* Línea final y Copyright */}
         <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest text-center md:text-left">
-          <p>© {currentYear} OneRed - {t('footer_rights', 'Todos los derechos reservados.')}</p>
+          <p>© {currentYear} ONEREDRD - {t('footer_rights', 'Todos los derechos reservados.')}</p>
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
             <a href="#nosotros" className="hover:text-slate-600 transition-colors">{t('footer_privacidad', 'Privacidad')}</a>
             <a href="#nosotros" className="hover:text-slate-600 transition-colors">{t('footer_terminos', 'Términos')}</a>

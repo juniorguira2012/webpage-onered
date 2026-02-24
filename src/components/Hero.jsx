@@ -80,7 +80,7 @@ export default function Hero() {
           </h1>
           
           <p className="mt-8 text-xl text-slate-600 max-w-lg leading-relaxed font-medium">
-            {t('desc', 'La fibra óptica más estable de RD llegó para quedarse. Conecta tu hogar hoy mismo con')} <span className="text-blue-600 font-bold">OneRed</span>.
+            {t('desc', 'La fibra óptica más estable de RD llegó para quedarse. Conecta tu hogar hoy mismo con')} <span className="text-blue-600 font-bold">ONERED</span>.
           </p>
 
           <div className="mt-12 flex flex-col sm:flex-row gap-5 items-start sm:items-center">
