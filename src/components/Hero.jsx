@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { ArrowLeftRight, User } from "lucide-react"; 
 import { useTranslation } from 'react-i18next';
 
-// 1. Importación de Imagenes (Intactas)
+// Importación de imagen para el 8 de Marzo
+import cintaMujer from "/public/assets/images/mujer-cinta.png";
+
+// Importación de imágenes para el slider
 import img1 from "/public/assets/images/plan1.jpg";
 import img2 from "/public/assets/images/plan2.jpeg";
 import img3 from "/public/assets/images/plan3.jpeg";
@@ -10,11 +13,17 @@ import img4 from "/public/assets/images/plan4.jpeg";
 import img5 from "/public/assets/images/plan5.jpeg";
 import img6 from "/public/assets/images/plan6.jpeg";
 
+
 const imagenes = [img1, img2, img3, img4, img5, img6];
 
 export default function Hero() {
-  const { t } = useTranslation(); // Aquí se crea 't'
+  const { t } = useTranslation();
   const [index, setIndex] = useState(0);
+
+  // LOGICA PARA LA CINTA (8 DE MARZO)
+  const hoy = new Date();
+  const esDiaDeLaMujer = hoy.getMonth() === 2 && hoy.getDate() >= 7 && hoy.getDate() <= 9; // Mostrar del 7 al 9 de marzo
+  const esDiaDelAmor = hoy.getMonth() === 1 && hoy.getDate() === 14; // Mes 1 es Febrero en JS
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -23,8 +32,6 @@ export default function Hero() {
     return () => clearInterval(intervalo);
   }, []);
 
-  // --- OFERTAS CON TRADUCCIÓN CORREGIDA ---
-  // La 'llave' es el primer parámetro, el 'texto por defecto' es el segundo
   const promoTexto = t('promo_texto', 'Aumenta de 6 a 30 Mbps por solo');
   const promoExtra = t('promo_extra', 'adicionales');
 
@@ -49,7 +56,7 @@ export default function Hero() {
     link: "#planes" 
   };
 
-  const mesActual = new Date().getMonth();
+  const mesActual = hoy.getMonth();
   const ofertaDelMes = OFERTAS_MENSUALES[mesActual] || OFERTA_DEFAULT;
 
   return (
@@ -126,6 +133,28 @@ export default function Hero() {
 
         {/* LADO DERECHO (SLIDER) */}
         <div className="relative">
+          {/* CINTA DÍA DE LA MUJER (SOLO 8 DE MARZO) */}
+          {esDiaDeLaMujer && (
+            <div className="absolute top-[-30px] right-[-10px] z-[30] animate-bounce-slow">
+              <img 
+                src={cintaMujer} 
+                alt="8 de Marzo"
+                className="w-24 md:w-32 drop-shadow-2xl"
+              />
+            </div>
+          )}
+
+           {esDiaDelAmor && (
+            <div className="absolute top-[-30px] right-[-10px] z-[30] animate-bounce-slow">
+              <img 
+                src={cintaMujer} 
+                alt="14 de febrero"
+                className="w-24 md:w-32 drop-shadow-2xl"
+              />
+            </div>
+          )}
+          
+
           <div className="absolute -top-10 -left-10 bg-white p-5 rounded-[2rem] shadow-xl z-20 border border-slate-50 animate-bounce-slow">
             <div className="flex items-center gap-4">
               <ArrowLeftRight 
