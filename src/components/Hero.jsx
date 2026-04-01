@@ -28,7 +28,7 @@ const EFEMERIDES = [
   { nombre: "Día del Amor", mes: 1, inicio: 14, fin: 14, imagen: cintaMujer },
   { nombre: "Día de la Patria", mes: 1, inicio: 27, fin: 27, imagen: cintaMujer},
   { nombre: "Día de la Mujer", mes: 2, inicio: 7, fin: 9, imagen: cintaMujer },
-  { nombre: "Semana Santa", mes: 3, inicio: 1, fin: 6, imagen: SemanaSanta },
+  { nombre: "Semana Santa", mes: 3, inicio: 0, fin: 5, imagen: SemanaSanta },
   // Cambiar por icono de corazón luego
   // Agrega más aquí siguiendo el mismo formato:  
   // { nombre: "Día de las Madres", mes: 4, inicio: 20, fin: 31, imagen: iconoMadres },
