@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { ArrowLeftRight, User } from "lucide-react"; 
 import { useTranslation } from 'react-i18next';
 
-// Importación de imagen para el 8 de Marzo
+// 1. IMPORTACIÓN DE ICONOS/CINTAS
 import cintaMujer from "/public/assets/images/mujer-cinta.png";
+import SemanaSanta from "/public/assets/images/semana-santa.png";
+// Importa aquí otros iconos cuando los tengas, ej:
+// import banderaRD from "/public/assets/images/bandera-rd.png";
 
 // Importación de imágenes para el slider
 import img1 from "/public/assets/images/plan1.jpg";
@@ -12,18 +15,38 @@ import img3 from "/public/assets/images/plan3.jpeg";
 import img4 from "/public/assets/images/plan4.jpeg";
 import img5 from "/public/assets/images/plan5.jpeg";
 import img6 from "/public/assets/images/plan6.jpeg";
-
+//import { image } from "framer-motion/client";
 
 const imagenes = [img1, img2, img3, img4, img5, img6];
+
+// 2. CONFIGURACIÓN DE EFEMÉRIDES (Fácil de modificar)
+// Meses en JS: 0=Ene, 1=Feb, 2=Mar, 3=Abr, 4=May, 5=Jun...
+const EFEMERIDES = [
+  { nombre: "Año Nuevo", mes: 0, inicio: 1, fin: 2, imagen: cintaMujer },
+  { nombre: "Dia de los Santo reyes", mes: 0, inicio: 6, fin:7, imagen: cintaMujer},
+  { nombre: "Dia d Duarte", mes: 0, inicio: 1, fin: 2, imagen: cintaMujer},
+  { nombre: "Día del Amor", mes: 1, inicio: 14, fin: 14, imagen: cintaMujer },
+  { nombre: "Día de la Patria", mes: 1, inicio: 27, fin: 27, imagen: cintaMujer},
+  { nombre: "Día de la Mujer", mes: 2, inicio: 7, fin: 9, imagen: cintaMujer },
+  { nombre: "Semana Santa", mes: 3, inicio: 1, fin: 6, imagen: SemanaSanta },
+  // Cambiar por icono de corazón luego
+  // Agrega más aquí siguiendo el mismo formato:  
+  // { nombre: "Día de las Madres", mes: 4, inicio: 20, fin: 31, imagen: iconoMadres },
+];
 
 export default function Hero() {
   const { t } = useTranslation();
   const [index, setIndex] = useState(0);
 
-  // LOGICA PARA LA CINTA (8 DE MARZO)
+  // 3. LÓGICA DE DETECCIÓN AUTOMÁTICA
   const hoy = new Date();
-  const esDiaDeLaMujer = hoy.getMonth() === 2 && hoy.getDate() >= 7 && hoy.getDate() <= 9; // Mostrar del 7 al 9 de marzo
-  const esDiaDelAmor = hoy.getMonth() === 1 && hoy.getDate() === 14; // Mes 1 es Febrero en JS
+  const diaActual = hoy.getDate();
+  const mesActual = hoy.getMonth();
+
+  // Buscamos si hoy cae dentro de alguna efeméride
+  const eventoActivo = EFEMERIDES.find(e => 
+    e.mes === mesActual && diaActual >= e.inicio && diaActual <= e.fin
+  );
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -56,7 +79,6 @@ export default function Hero() {
     link: "#planes" 
   };
 
-  const mesActual = hoy.getMonth();
   const ofertaDelMes = OFERTAS_MENSUALES[mesActual] || OFERTA_DEFAULT;
 
   return (
@@ -133,27 +155,17 @@ export default function Hero() {
 
         {/* LADO DERECHO (SLIDER) */}
         <div className="relative">
-          {/* CINTA DÍA DE LA MUJER (SOLO 8 DE MARZO) */}
-          {esDiaDeLaMujer && (
-            <div className="absolute top-[-30px] right-[-10px] z-[30] animate-bounce-slow">
-              <img 
-                src={cintaMujer} 
-                alt="8 de Marzo"
-                className="w-24 md:w-32 drop-shadow-2xl"
-              />
-            </div>
-          )}
-
-           {esDiaDelAmor && (
-            <div className="absolute top-[-30px] right-[-10px] z-[30] animate-bounce-slow">
-              <img 
-                src={cintaMujer} 
-                alt="14 de febrero"
-                className="w-24 md:w-32 drop-shadow-2xl"
-              />
-            </div>
-          )}
           
+          {/* RENDERIZADO AUTOMÁTICO DE CINTAS/ICONOS */}
+          {eventoActivo && (
+            <div className="absolute top-[-60px] right-[-10px] z-[30] animate-bounce-slow">
+              <img 
+                src={eventoActivo.imagen} 
+                alt={eventoActivo.nombre}
+                className="w-40 md:w-50 drop-shadow-2xl"
+              />
+            </div>
+          )}
 
           <div className="absolute -top-10 -left-10 bg-white p-5 rounded-[2rem] shadow-xl z-20 border border-slate-50 animate-bounce-slow">
             <div className="flex items-center gap-4">
