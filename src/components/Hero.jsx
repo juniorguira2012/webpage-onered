@@ -2,48 +2,38 @@ import { useState, useEffect } from "react";
 import { ArrowLeftRight, User } from "lucide-react"; 
 import { useTranslation } from 'react-i18next';
 
-// 1. IMPORTACIÓN DE ICONOS/CINTAS
-import cintaMujer from "/public/assets/images/mujer-cinta.png";
-import SemanaSanta from "/public/assets/images/semana-santa.png";
-// Importa aquí otros iconos cuando los tengas, ej:
-// import banderaRD from "/public/assets/images/bandera-rd.png";
+// --- CORRECCIÓN DE RUTAS (Se elimina /public) ---
+import cintaMujer from "/assets/images/mujer-cinta.png";
+import semanaSanta from "/assets/images/semana-santa.png";
 
-// Importación de imágenes para el slider
-import img1 from "/public/assets/images/plan1.jpg";
-import img2 from "/public/assets/images/plan2.jpeg";
-import img3 from "/public/assets/images/plan3.jpeg";
-import img4 from "/public/assets/images/plan4.jpeg";
-import img5 from "/public/assets/images/plan5.jpeg";
-import img6 from "/public/assets/images/plan6.jpeg";
-//import { image } from "framer-motion/client";
+import img1 from "/assets/images/plan1.jpg";
+import img2 from "/assets/images/plan2.jpeg";
+import img3 from "/assets/images/plan3.jpeg";
+import img4 from "/assets/images/plan4.jpeg";
+import img5 from "/assets/images/plan5.jpeg";
+import img6 from "/assets/images/plan6.jpeg";
 
 const imagenes = [img1, img2, img3, img4, img5, img6];
 
-// 2. CONFIGURACIÓN DE EFEMÉRIDES (Fácil de modificar)
-// Meses en JS: 0=Ene, 1=Feb, 2=Mar, 3=Abr, 4=May, 5=Jun...
+// 2. CONFIGURACIÓN DE EFEMÉRIDES
 const EFEMERIDES = [
   { nombre: "Año Nuevo", mes: 0, inicio: 1, fin: 2, imagen: cintaMujer },
   { nombre: "Dia de los Santo reyes", mes: 0, inicio: 6, fin:7, imagen: cintaMujer},
-  { nombre: "Dia d Duarte", mes: 0, inicio: 1, fin: 2, imagen: cintaMujer},
+  { nombre: "Dia d Duarte", mes: 0, inicio: 25, fin: 27, imagen: cintaMujer}, // Ajustado a fecha real de Duarte
   { nombre: "Día del Amor", mes: 1, inicio: 14, fin: 14, imagen: cintaMujer },
   { nombre: "Día de la Patria", mes: 1, inicio: 27, fin: 27, imagen: cintaMujer},
   { nombre: "Día de la Mujer", mes: 2, inicio: 7, fin: 9, imagen: cintaMujer },
-  { nombre: "Semana Santa", mes: 3, inicio: 0, fin: 5, imagen: SemanaSanta },
-  // Cambiar por icono de corazón luego
-  // Agrega más aquí siguiendo el mismo formato:  
-  // { nombre: "Día de las Madres", mes: 4, inicio: 20, fin: 31, imagen: iconoMadres },
+  { nombre: "Semana Santa", mes: 3, inicio: 1, fin: 6, imagen: semanaSanta }, 
 ];
 
 export default function Hero() {
   const { t } = useTranslation();
   const [index, setIndex] = useState(0);
 
-  // 3. LÓGICA DE DETECCIÓN AUTOMÁTICA
   const hoy = new Date();
   const diaActual = hoy.getDate();
   const mesActual = hoy.getMonth();
 
-  // Buscamos si hoy cae dentro de alguna efeméride
   const eventoActivo = EFEMERIDES.find(e => 
     e.mes === mesActual && diaActual >= e.inicio && diaActual <= e.fin
   );
