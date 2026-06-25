@@ -70,7 +70,7 @@ export default function Planes() {
           nombre={t('plan_business', 'Plan Business')}
           bajada="100"    
           subida="70"
-          precio="3,800"
+          precio="2,800"
           icon={<Building2 {...iconProps} />}
         />
 
