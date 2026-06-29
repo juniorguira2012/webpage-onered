@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Tu truco para bypass de caché (Actualízalo al subir a Git)
-ENV CACHE_BYPASS=20260625
+ENV CACHE_BYPASS=20260629
 
 # Limpiamos y clonamos
 RUN rm -rf ./* && git clone https://github.com/juniorguira2012/webpage-onered.git .
