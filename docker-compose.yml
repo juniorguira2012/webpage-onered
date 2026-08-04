@@ -1,9 +1,15 @@
 version: '3.8'
+
 services:
   web-onered:
     build: .
     container_name: webpage-onered
     restart: always
+    environment:
+      - PORT=3000
+      - AZUL_MERCHANT_ID=39038540035 # Tu código de afiliado (Pruebas/Producción)
+      - AZUL_AUTH_KEY=tu_clave_secreta_aqui # Tu Key de cifrado HMAC
+      - AZUL_API_URL=https://sandbox.azul.com.do/webservices/JSON/Default.aspx
     networks:
       - network_public
     labels:
@@ -16,3 +22,22 @@ services:
 networks:
   network_public:
     external: true
+
+# version: '3.8'
+# services:
+#   web-onered:
+#     build: .
+#     container_name: webpage-onered
+#     restart: always
+#     networks:
+#       - network_public
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.http.routers.onered.rule=Host(`oneredrd.com`) || Host(`www.oneredrd.com`)"
+#       - "traefik.http.routers.onered.entrypoints=websecure"
+#       - "traefik.http.routers.onered.tls.certresolver=letsencryptresolver"
+#       - "traefik.http.services.onered.loadbalancer.server.port=3000"
+
+# networks:
+#   network_public:
+#     external: true

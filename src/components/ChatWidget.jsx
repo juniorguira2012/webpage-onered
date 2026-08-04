@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react"; // Añadido useState
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const ChatWidget = () => {
   const { i18n, t } = useTranslation();
-  const [isAtFooter, setIsAtFooter] = useState(false); // Estado para detectar el final
+  const [isAtFooter, setIsAtFooter] = useState(false);
 
+  // 1. Inyección de estilos y carga de Chatwoot (se ejecuta solo UNA vez al montar)
   useEffect(() => {
-    // 1. Estilos Dinámicos
+    // Estilos CSS Base
     const style = document.createElement("style");
+    style.id = "chatwoot-custom-styles";
     style.innerHTML = `
       .woot-widget-bubble {
         background-color: #25D366 !important;
@@ -18,8 +20,11 @@ const ChatWidget = () => {
         border: none !important;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
         z-index: 9999 !important;
-        transition: bottom 0.3s ease-in-out !important; /* Animación suave al subir */
-        bottom: ${isAtFooter ? '100px' : '22px'} !important; /* Sube con el estado */
+        transition: bottom 0.3s ease-in-out !important;
+        bottom: 22px !important;
+      }
+      .woot-widget-bubble.is-at-footer {
+        bottom: 100px !important;
       }
       .woot-widget-bubble.woot--close {
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg') !important;
@@ -38,16 +43,27 @@ const ChatWidget = () => {
     `;
     document.head.appendChild(style);
 
-    // 2. Detección de Scroll para no tapar el footer
+    // Detección de Scroll para elevar la burbuja de Chatwoot directamente con una clase CSS
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + window.scrollY;
-      const threshold = document.documentElement.scrollHeight - 150; // 150px antes del final
-      setIsAtFooter(scrollPosition >= threshold);
+      const threshold = document.documentElement.scrollHeight - 150;
+      const isBottom = scrollPosition >= threshold;
+      
+      setIsAtFooter(isBottom);
+
+      const bubble = document.querySelector('.woot-widget-bubble');
+      if (bubble) {
+        if (isBottom) {
+          bubble.classList.add('is-at-footer');
+        } else {
+          bubble.classList.remove('is-at-footer');
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // 3. Carga de SDK Chatwoot
+    // Carga de SDK Chatwoot
     if (!window.chatwootSDK) {
       (function(d, t) {
         var BASE_URL = "https://chatone.oneredrd.com";
@@ -63,8 +79,10 @@ const ChatWidget = () => {
       })(document, "script");
     }
 
+    // Manejador seguro para cerrar la burbuja
     const handleBubbleClick = (event) => {
-      if (window.$chatwoot && window.$chatwoot.isOpen()) {
+      // Usamos .isOpen como propiedad (sin paréntesis)
+      if (window.$chatwoot && window.$chatwoot.isOpen) {
         const widgetBubble = document.querySelector('.woot-widget-bubble');
         if (widgetBubble && widgetBubble.contains(event.target)) {
           event.stopImmediatePropagation();
@@ -79,19 +97,20 @@ const ChatWidget = () => {
     return () => {
       document.removeEventListener('mousedown', handleBubbleClick, true);
       window.removeEventListener("scroll", handleScroll);
-      document.head.removeChild(style);
+      const existingStyle = document.getElementById("chatwoot-custom-styles");
+      if (existingStyle) document.head.removeChild(existingStyle);
     };
-  }, [isAtFooter]); // Re-ejecuta para actualizar el estilo del bottom
+  }, []); // [] Permite que el efecto corra solo una vez al cargar el componente
 
+  // 2. Cambio dinámico de idioma
   useEffect(() => {
-    if (window.$chatwoot) {
-      const lang = i18n.language.split('-')[0];
+    if (window.$chatwoot && typeof window.$chatwoot.setLocale === 'function') {
+      const lang = i18n.language ? i18n.language.split('-')[0] : 'es';
       window.$chatwoot.setLocale(lang);
     }
   }, [i18n.language]);
 
   return (
-    /* Aplicamos el cambio de posición también al letrero de React */
     <div 
       className={`fixed ${isAtFooter ? 'bottom-[100px]' : 'bottom-[22px]'} right-[90px] z-[9998] hidden md:flex items-center transition-all duration-300`}
     >
