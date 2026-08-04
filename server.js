@@ -19,22 +19,22 @@ app.use(express.urlencoded({ extended: true }));
 // CONFIGURACIÓN DE MIKROWISP
 // ==========================================
 const MIKROWISP_CONFIG = {
-  // Se añade /api/v1 al final de la URL base
   url: process.env.MIKROWISP_URL || "https://mikrowisp.oneredrd.com/api/v1",
   apiKey: process.env.MIKROWISP_API_KEY || "tu_api_key_aqui"
 };
 
 // ==========================================
-// CONFIGURACIÓN DE AZUL
+// CONFIGURACIÓN DE AZUL (Pruebas / Producción)
 // ==========================================
 const IS_PRODUCTION = process.env.AZUL_ENV === 'production';
 
 const AZUL_CONFIG = {
-  merchantId: process.env.AZUL_MERCHANT_ID || "39038540035", 
+  // En ambiente de prueba Azul suele pedir MerchantId de prueba como APPROVED_MERCHANT si no tienes uno asignado
+  merchantId: process.env.AZUL_MERCHANT_ID || (IS_PRODUCTION ? "39038540035" : "APPROVED_MERCHANT"), 
   merchantName: process.env.AZUL_MERCHANT_NAME || "OneRedRD",
   merchantType: process.env.AZUL_MERCHANT_TYPE || "Telecommunications",
   currencyCode: process.env.AZUL_CURRENCY_CODE || "$", 
-  authKey: process.env.AZUL_AUTH_KEY || "tu_clave_secreta_pruebas", 
+  authKey: process.env.AZUL_AUTH_KEY || (IS_PRODUCTION ? "tu_clave_secreta_prod" : "APPROVED_AUTH_KEY"), 
   
   urlPruebas: "https://pruebas.azul.com.do/PaymentPage/",
   urlProduccionPrimary: "https://pagos.azul.com.do/PaymentPage/Default.aspx",
@@ -123,7 +123,7 @@ app.post('/api/facturas/consultar', async (req, res) => {
       concepto: item.descripcion || item.detalle || 'Servicio de Internet',
       fechaEmision: item.fechagestion || item.fecha || 'N/A',
       fechaVencimiento: item.fechavencimiento || item.vencimiento || 'N/A',
-      estado: item.estado_texto || estadoTexto // "vencido", "no pagado", "pagado"
+      estado: item.estado_texto || estadoTexto
     });
 
     // 2. Obtener Facturas Pendientes (estado: 1)
@@ -176,6 +176,7 @@ app.post('/api/facturas/consultar', async (req, res) => {
     return res.status(500).json({ exito: false, mensaje: "Error procesando la consulta." });
   }
 });
+
 // ==========================================
 // ENDPOINT 2: Generar Checkout de AZUL
 // ==========================================
@@ -188,8 +189,8 @@ app.post('/api/pagos/crear-checkout', (req, res) => {
     }
 
     const orderNumber = `ONERED-${Date.now()}`;
-    const amount = Math.round(monto * 100).toString(); 
-    const itbis = "000"; 
+    const amount = Math.round(parseFloat(monto) * 100).toString(); 
+    const itbis = "0"; 
 
     const params = {
       MerchantId: AZUL_CONFIG.merchantId,
@@ -204,7 +205,7 @@ app.post('/api/pagos/crear-checkout', (req, res) => {
       CancelUrl: AZUL_CONFIG.cancelUrl,
       UseCustomField1: "1",
       CustomField1Label: "Cedula/Contrato",
-      CustomField1Value: clienteId,
+      CustomField1Value: String(clienteId),
       UseCustomField2: "1",
       CustomField2Label: "Concepto",
       CustomField2Value: planNombre || "Pago de Servicio OneRed",
@@ -214,6 +215,7 @@ app.post('/api/pagos/crear-checkout', (req, res) => {
 
     const authHash = generarAuthHashPaymentPage(params, AZUL_CONFIG.authKey);
 
+    // Seleccionar URLs según si estamos en Pruebas o Producción
     const targetUrl = IS_PRODUCTION ? AZUL_CONFIG.urlProduccionPrimary : AZUL_CONFIG.urlPruebas;
     const fallbackUrl = IS_PRODUCTION ? AZUL_CONFIG.urlProduccionSecondary : AZUL_CONFIG.urlPruebas;
 
@@ -242,4 +244,5 @@ app.get(/.*/, (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en: http://localhost:${PORT}`);
+  console.log(`💳 Entorno Azul actual: ${IS_PRODUCTION ? 'PRODUCCIÓN' : 'PRUEBAS (SANDBOX)'}`);
 });

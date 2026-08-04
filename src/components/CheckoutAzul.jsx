@@ -6,11 +6,11 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
 
   // Valores por defecto en caso de no recibir objeto de comercio por props
   const comercioInfo = datosComercio || {
-    nombre: 'OneRedRD SRL',
-    rnc: '132-03376-2',
-    direccion: 'Km 17 autopista Duarte, Los Alcarrizos, Santo Domingo Oeste, República Dominicana',
-    telefono: '+1 (829) 974-7020',
-    email: 'administracion@onered.com.do'
+    nombre: 'ONERED JWG532, S.R.L.',
+    rnc: '131-93314-9',
+    direccion: 'Calle Lebron #60, Los Alcarrizos, Santo Domingo Oeste, República Dominicana',
+    telefono: '+1 (809) 422-5424',
+    email: 'info@onered.com'
   };
 
   const handlePagar = () => {

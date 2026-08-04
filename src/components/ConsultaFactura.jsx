@@ -204,8 +204,8 @@ export default function ConsultaFactura() {
                 <span className="block text-2xl font-black text-slate-800">{datosCliente.cantSinPagar}</span>
                 <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Sin pagar</span>
               </div>
-              <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 text-center">
-                <span className="block text-xl font-black text-blue-700">
+              <div className="bg-red-50/70 border border-red-100 rounded-2xl p-3.5 text-center">
+                <span className="block text-xl font-black text-red-700">
                   RD$ {datosCliente.totalPendiente.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
                 </span>
                 <span className="text-[11px] font-bold text-blue-600/90 uppercase tracking-wider">Total pendiente</span>
@@ -253,7 +253,7 @@ export default function ConsultaFactura() {
                             Emitida: {fac.fechaEmision} · Vence: {fac.fechaVencimiento}
                           </p>
                         </div>
-                        <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md uppercase tracking-wider border border-blue-100">
+                        <span className="text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-md uppercase tracking-wider border border-red-200">
                           {fac.estado}
                         </span>
                       </div>
