@@ -170,14 +170,11 @@ export default function Navbar() {
           {/* Botón Pagar Factura */}
           <div className="relative" ref={menuRef}>
             <button 
-              onClick={() => {
-                setMenuPagoOpen(false);
-                navigate('/consulta-factura'); // <-- Te lleva a la ruta de pago
-              }}
-              className="w-full text-left flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition"
+              onClick={() => setMenuPagoOpen(!menuPagoOpen)}
+              className="flex items-center gap-1 text-xs md:text-sm font-bold text-slate-700 hover:text-blue-600 transition p-1.5"
             >
-              <CreditCard size={18}/>
-              {t('nav_pagar_ahora', 'Pagar Ahora')}
+              <CreditCard size={14} className="md:size-[16px]" />
+              {t('nav_pagar_ahora', 'PAGAR')}
             </button>
             
             <div className={`absolute right-0 mt-2 w-52 transition-all duration-300 origin-top-right ${menuPagoOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
@@ -200,7 +197,7 @@ export default function Navbar() {
                   className="w-full text-left flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition"
                 >
                   <CreditCard size={18}/>
-                  {t('nav_pagar_ahora', 'Pagar Ahora')}
+                  {t('nav_pagar_ahora', 'Pagar Con Tarjeta')}
                 </button>
               </div>
             </div>
