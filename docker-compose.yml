@@ -5,11 +5,27 @@ services:
     build: .
     container_name: webpage-onered
     restart: always
+    env_file:
+      - .env
     environment:
-      - PORT=3000
-      - AZUL_MERCHANT_ID=39038540035 # Tu código de afiliado (Pruebas/Producción)
-      - AZUL_AUTH_KEY=tu_clave_secreta_aqui # Tu Key de cifrado HMAC
-      - AZUL_API_URL=https://sandbox.azul.com.do/webservices/JSON/Default.aspx
+      - PORT=${PORT:-3000}
+      - AZUL_ENV=${AZUL_ENV:-production}
+      - AZUL_IS_TESTING=${AZUL_IS_TESTING:-true}
+      - MIKROWISP_URL=${MIKROWISP_URL}
+      - MIKROWISP_API_KEY=${MIKROWISP_API_KEY}
+      - AZUL_MERCHANT_ID_TEST=${AZUL_MERCHANT_ID_TEST:-APPROVED_MERCHANT}
+      - AZUL_MERCHANT_ID_PROD=${AZUL_MERCHANT_ID_PROD}
+      - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-OneRedRD}
+      - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
+      - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
+      - AZUL_AUTH_KEY_TEST=${AZUL_AUTH_KEY_TEST:-APPROVED_AUTH_KEY}
+      - AZUL_AUTH_KEY_PROD=${AZUL_AUTH_KEY_PROD}
+      - AZUL_URL_PRUEBAS=${AZUL_URL_PRUEBAS:-https://pruebas.azul.com.do/PaymentPage/}
+      - AZUL_URL_PRODUCCION_PRIMARY=${AZUL_URL_PRODUCCION_PRIMARY:-https://pagos.azul.com.do/PaymentPage/Default.aspx}
+      - AZUL_URL_PRODUCCION_SECONDARY=${AZUL_URL_PRODUCCION_SECONDARY:-https://contpagos.azul.com.do/PaymentPage/Default.aspx}
+      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://oneredrd.com/pago-exitoso}
+      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://oneredrd.com/pago-declinado}
+      - AZUL_CANCEL_URL=${AZUL_CANCEL_URL:-https://oneredrd.com/pago-cancelado}
     networks:
       - network_public
     labels:
@@ -22,22 +38,3 @@ services:
 networks:
   network_public:
     external: true
-
-# version: '3.8'
-# services:
-#   web-onered:
-#     build: .
-#     container_name: webpage-onered
-#     restart: always
-#     networks:
-#       - network_public
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.http.routers.onered.rule=Host(`oneredrd.com`) || Host(`www.oneredrd.com`)"
-#       - "traefik.http.routers.onered.entrypoints=websecure"
-#       - "traefik.http.routers.onered.tls.certresolver=letsencryptresolver"
-#       - "traefik.http.services.onered.loadbalancer.server.port=3000"
-
-# networks:
-#   network_public:
-#     external: true

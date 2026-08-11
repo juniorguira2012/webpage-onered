@@ -25,7 +25,7 @@ export default function LocationMap() {
                   <MapPin className="text-blue-600" size={20} />
                 </div>
                 <p className="text-slate-600 font-medium">
-                  Calle Lebrón 60, Los Alcarrizos, <br />Santo Domingo, RD.
+                 Los Alcarrizos, Calle Lebrón #60,  Santo Domingo Oeste, República Dominicana
                 </p>
               </div>
 

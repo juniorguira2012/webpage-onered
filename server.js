@@ -14,31 +14,60 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 // ==========================================
 // CONFIGURACIÓN DE MIKROWISP
 // ==========================================
 const MIKROWISP_CONFIG = {
-  url: process.env.MIKROWISP_URL || "https://mikrowisp.oneredrd.com/api/v1",
-  apiKey: process.env.MIKROWISP_API_KEY || "tu_api_key_aqui"
+  url: process.env.MIKROWISP_URL,
+  apiKey: process.env.MIKROWISP_API_KEY
 };
 
 // ==========================================
 // CONFIGURACIÓN DE AZUL (Pruebas / Producción)
 // ==========================================
-const IS_PRODUCTION = process.env.AZUL_ENV === 'production';
+// Soporta dos patrones:
+// 1. Directo:  AZUL_MERCHANT_ID, AZUL_AUTH_KEY
+// 2. Test/Prod: AZUL_MERCHANT_ID_TEST / AZUL_MERCHANT_ID_PROD, AZUL_AUTH_KEY_TEST / AZUL_AUTH_KEY_PROD
+const IS_TESTING = process.env.AZUL_IS_TESTING === 'true';
+const IS_PRODUCTION = !IS_TESTING && (
+  process.env.AZUL_ENV === 'production' || 
+  (process.env.AZUL_MERCHANT_ID_PROD && process.env.AZUL_AUTH_KEY_PROD)
+);
+
+const AZUL_MERCHANT_ID = 
+  process.env.AZUL_MERCHANT_ID || 
+  (IS_TESTING ? process.env.AZUL_MERCHANT_ID_TEST : process.env.AZUL_MERCHANT_ID_PROD) ||
+  process.env.AZUL_MERCHANT_ID_TEST;
+
+const AZUL_AUTH_KEY = 
+  process.env.AZUL_AUTH_KEY || 
+  (IS_TESTING ? process.env.AZUL_AUTH_KEY_TEST : process.env.AZUL_AUTH_KEY_PROD) ||
+  process.env.AZUL_AUTH_KEY_TEST;
+
+// Validar credenciales críticas
+const missingVars = [];
+if (!MIKROWISP_CONFIG.url) missingVars.push('MIKROWISP_URL');
+if (!MIKROWISP_CONFIG.apiKey) missingVars.push('MIKROWISP_API_KEY');
+if (!AZUL_MERCHANT_ID) missingVars.push('AZUL_MERCHANT_ID (o AZUL_MERCHANT_ID_TEST/PROD)');
+if (!AZUL_AUTH_KEY) missingVars.push('AZUL_AUTH_KEY (o AZUL_AUTH_KEY_TEST/PROD)');
+
+if (missingVars.length > 0) {
+  console.error('❌ ERROR: Faltan las siguientes variables de entorno críticas:');
+  missingVars.forEach(v => console.error(`   - ${v}`));
+  console.error('Consulta el archivo .env.example para ver todas las variables requeridas.');
+  process.exit(1);
+}
 
 const AZUL_CONFIG = {
-  // En ambiente de prueba Azul suele pedir MerchantId de prueba como APPROVED_MERCHANT si no tienes uno asignado
-  merchantId: process.env.AZUL_MERCHANT_ID || (IS_PRODUCTION ? "39038540035" : "APPROVED_MERCHANT"), 
+  merchantId: AZUL_MERCHANT_ID,
   merchantName: process.env.AZUL_MERCHANT_NAME || "OneRedRD",
   merchantType: process.env.AZUL_MERCHANT_TYPE || "Telecommunications",
-  currencyCode: process.env.AZUL_CURRENCY_CODE || "$", 
-  authKey: process.env.AZUL_AUTH_KEY || (IS_PRODUCTION ? "tu_clave_secreta_prod" : "APPROVED_AUTH_KEY"), 
-  
-  urlPruebas: "https://pruebas.azul.com.do/PaymentPage/",
-  urlProduccionPrimary: "https://pagos.azul.com.do/PaymentPage/Default.aspx",
-  urlProduccionSecondary: "https://contpagos.azul.com.do/PaymentPage/Default.aspx",
+  currencyCode: process.env.AZUL_CURRENCY_CODE || "$",
+  authKey: AZUL_AUTH_KEY,
+
+  urlPruebas: process.env.AZUL_URL_PRUEBAS || "https://pruebas.azul.com.do/PaymentPage/",
+  urlProduccionPrimary: process.env.AZUL_URL_PRODUCCION_PRIMARY || "https://pagos.azul.com.do/PaymentPage/Default.aspx",
+  urlProduccionSecondary: process.env.AZUL_URL_PRODUCCION_SECONDARY || "https://contpagos.azul.com.do/PaymentPage/Default.aspx",
 
   approvedUrl: process.env.AZUL_APPROVED_URL || "https://oneredrd.com/pago-exitoso",
   declinedUrl: process.env.AZUL_DECLINED_URL || "https://oneredrd.com/pago-declinado",

@@ -8,8 +8,8 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
   const comercioInfo = datosComercio || {
     nombre: 'ONERED JWG532, S.R.L.',
     rnc: '131-93314-9',
-    direccion: 'Calle Lebron #60, Los Alcarrizos, Santo Domingo Oeste, República Dominicana',
-    telefono: '+1 (809) 422-5424',
+    direccion: 'Los Alcarrizos, Calle Lebron #60, Santo Domingo Oeste, República Dominicana',
+    telefono: '+1 (809) 422-5424 / (809) 447-4575',
     email: 'info@onered.com'
   };
 
@@ -90,16 +90,12 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
           <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400">
             MEDIOS DE PAGO ACEPTADOS
           </h4>
-          <div className="flex justify-center items-center gap-4 py-1">
-            {/* Logos representativos Visa y Mastercard */}
-            <span className="text-xs font-black italic tracking-tighter text-blue-800 border px-2 py-1 rounded border-slate-200">
-              VISA
-            </span>
-            <span className="text-xs font-black text-slate-800 border px-2 py-1 rounded border-slate-200 flex items-center gap-0.5">
-              <span className="w-2.5 h-2.5 bg-red-500 rounded-full inline-block"></span>
-              <span className="w-2.5 h-2.5 bg-amber-500 rounded-full inline-block -ml-1.5 opacity-80"></span>
-              Mastercard
-            </span>
+          <div className="flex justify-center items-center gap-6 py-2">
+            <img src="/assets/images/visa.webp" alt="Visa" className="h-8 object-contain" />
+            <img src="/assets/images/mastercardlogo.webp" alt="Mastercard" className="h-14 object-contain" />
+            <img src="/assets/images/visalogo.webp" alt="Visa check" className="h-8 object-contain" />
+            <img src="/assets/images/martercardcheck.webp" alt="Mastercard" className="h-9 object-contain" />
+            <img src="/assets/images/logo-azul.jpg" alt="Mastercard" className="h-10 object-contain" />
           </div>
         </div>
 

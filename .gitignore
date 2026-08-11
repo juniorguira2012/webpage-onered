@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 node_modules
+
+# Environment variables - SECURITY: never commit .env files
+.env
+.env.*
+!.env.example
