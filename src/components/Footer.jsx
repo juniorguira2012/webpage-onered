@@ -203,7 +203,15 @@ return (
         {/* Línea final y Copyright */}
         <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest text-center md:text-left">
           <div className="flex flex-col gap-1">
-            <p>© {currentYear} ONERED JWG532, S.R.L. Todos los derechos reservados.</p>
+            <div className="flex items-center gap-2">
+              <p>© {currentYear} ONERED JWG532, S.R.L. Todos los derechos reservados.</p>
+              {/* Mostramos la versión de la app si está disponible */}
+              {import.meta.env.VITE_APP_VERSION && (
+                <span className="bg-slate-200 text-slate-500 text-[9px] font-bold px-1.5 py-0.5 rounded-md normal-case">
+                  v{import.meta.env.VITE_APP_VERSION}
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex flex-col md:flex-row gap-2 md:gap-4">
             <a href="#" onClick={openTerms} className="hover:text-blue-600 transition-colors cursor-pointer">{t('footer_terminos', 'Términos de Servicio')}</a>
