@@ -66,7 +66,7 @@ export default function PrivacyPolicyContent() {
       <hr className="my-4 border-gray-200" />
 
       <div className="bg-gray-50 p-4 rounded-lg text-xs space-y-1 text-gray-600">
-        <p className="font-bold text-gray-800 text-sm mb-2">Servicio al Cliente</p>
+        <p className="font-bold text-gray-800 text-sm mb-2">Servicio al cliente</p>
         <p><strong>ONERED</strong></p>
         <p><strong>Teléfono:</strong> +1 (809) 422-5424 / (809) 447-4575</p>
         <p><strong>Correo electrónico:</strong> info@oneredrd.com</p>

@@ -7,7 +7,7 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* FICHA TÉCNICA / IDENTIFICACION DE COMERCIO */}
       <div className="bg-gray-50 p-4 rounded-lg text-xs space-y-1 text-gray-600 border border-gray-200 mt-4">
-        <p className="font-bold text-gray-800 text-sm mb-1">Identificacion Comercial</p>
+        <p className="font-bold text-gray-800 text-sm mb-1">Identificacion comercial</p>
         <p><strong>Razón Social / Empresa:</strong> ONERED JWG532, S.R.L.</p>
         <p><strong>RNC:</strong> 131-93314-9</p>
         <p><strong>Atención al Cliente:</strong> (809) 422-5424 / (809) 447-4575</p>
@@ -21,7 +21,7 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* 1. SECCIÓN DE REGLAS DE SERVICIO */}
       <div className="space-y-2">
-        <h4 className="font-bold text-gray-900">1. Condiciones Generales del Servicio</h4>
+        <h4 className="font-bold text-gray-900">1. Condiciones generales del servicio</h4>
         <ol className="list-decimal ml-5 space-y-2">
           <li>El usuario se compromete a pagar mes tras mes el servicio solicitado en la fecha acordada por él mismo.</li>
           <li>El servicio tiene un costo de instalación que <strong>NO ES REEMBOLSABLE</strong> a la hora de retirarlo, tampoco avala el pago de ninguno de los equipos o materiales suministrados en la instalación, <strong>TAMPOCO ES UN PAGO DE MENSUALIDAD ADELANTADO.</strong></li>
@@ -35,13 +35,13 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* ADVERTENCIAS OPERATIVAS */}
       <div className="bg-amber-50 p-4 rounded-xl border-l-4 border-amber-400 text-xs text-amber-900 space-y-2">
-        <p><strong>IMPORTANTE SOBRE SUSPENSIÓN Y FACTURACIÓN:</strong> El usuario es responsable de mantener su servicio activo. Aun si el servicio es suspendido por falta de pago, el sistema continuará generando los cargos mensuales correspondientes.</p>
+        <p><strong>IMPORTANTE SOBRE SUSPENSIÓN Y FACTURACIÓN:</strong> El usuario es responsable de mantener su servicio activo. Aun si el servicio es suspendido por falta de pago, el sistema no continuará generando los cargos mensuales correspondientes excepto la deuda pendiente y los cargo del mes anterior.</p>
         <p><strong>IMPORTANTE SOBRE CANCELACIÓN:</strong> En caso de prescindir del servicio, debe tener su factura al día, devolver el equipo prestado y solicitar su carta de devolución en nuestras oficinas. De lo contrario, <strong>ONERED</strong> se reserva el derecho de reportar al buró crediticio la factura pendiente y el valor del equipo.</p>
       </div>
 
       {/* 2. SECCIÓN TÉCNICA Y COBERTURA */}
       <div className="space-y-2">
-        <h4 className="font-bold text-gray-900">2. Cobertura WiFi y Soporte Técnico</h4>
+        <h4 className="font-bold text-gray-900">2. Cobertura wiFi y soporte técnico</h4>
         <ol start="8" className="list-decimal ml-5 space-y-2">
           <li>Todos los equipos inalámbricos tienen un límite de alcance. No nos comprometemos a abarcar con señal WIFI todos los espacios de la casa o negocio; para ello se requiere un <strong>Repetidor WiFi</strong> (con costo adicional).</li>
           <li>El usuario es responsable de administrar la conexión y el cambio de contraseña. Los cambios de contraseña realizados por técnicos después de la instalación conllevan un costo adicional. <strong>La asistencia técnica llega hasta el router WiFi; NO manipulamos dispositivos internos (celulares, computadoras, Smart TVs).</strong></li>
@@ -55,7 +55,7 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* 3. SECCIÓN DE PAGOS EN LÍNEA Y SEGURIDAD AZUL (REQUISITO EXIGIDO POR AZUL) */}
       <div className="space-y-2 border-t pt-3">
-        <h4 className="font-bold text-gray-900">3. Pagos en Línea y Procesamiento de Tarjetas</h4>
+        <h4 className="font-bold text-gray-900">3. Pagos en línea y procesamiento de tarjetas</h4>
         <ul className="list-disc ml-5 space-y-2 text-xs">
           <li><strong>Moneda de Transacción:</strong> Todas las facturas y cobros a través del portal en línea son procesados exclusivamente en <strong>Pesos Dominicanos (DOP$ / RD$)</strong>.</li>
           <li><strong>Pasarela de Pago Segura:</strong> Los pagos mediante tarjeta de crédito o débito son procesados a través de la pasarela certificada PCI-DSS de <strong>Azul (Servicios Digitales Popular)</strong>. <strong>ONERED JWG532, S.R.L. no almacena ni guarda números de tarjeta, fechas de vencimiento ni códigos de seguridad (CVV)</strong> en sus servidores.</li>
@@ -65,7 +65,7 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* FICHA TÉCNICA / PIE DE SOPORTE */}
       <div className="bg-gray-50 p-4 rounded-lg text-xs space-y-1 text-gray-600 border border-gray-200 mt-4">
-        <p className="font-bold text-gray-800 text-sm mb-1">Contacto y Soporte Legal</p>
+        <p className="font-bold text-gray-800 text-sm mb-1">Contacto y soporte legal</p>
         <p><strong>Razón Social / Marca:</strong> ONERED JWG532, S.R.L.</p>
         <p><strong>RNC:</strong> 131-93314-9</p>
         <p><strong>Atención al Cliente:</strong> (809) 422-5424 / (809) 447-4575</p>

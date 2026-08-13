@@ -37,7 +37,7 @@ export default function DeliveryPolicyContent() {
       <div>
         <h4 className="font-bold text-gray-900 mb-1">3. Plazos de Activación del Servicio</h4>
         <p className="text-xs">
-          La activación efectiva del servicio se realiza habitualmente en un período de <strong>3 a 10 días laborables</strong> posteriores a la confirmación de la solicitud y el pago del cargo de instalación correspondiente. Factores externos (condiciones climáticas, permisología comunitaria o zonas de difícil acceso) pueden incidir en el tiempo final de entrega.
+          La activación efectiva del servicio se realiza habitualmente en un período de <strong>1 a 3 días laborables</strong> posteriores a la confirmación de la solicitud y el pago del cargo de instalación correspondiente. Factores externos (condiciones climáticas, permisología comunitaria o zonas de difícil acceso) pueden incidir en el tiempo final de entrega.
         </p>
       </div>
 
