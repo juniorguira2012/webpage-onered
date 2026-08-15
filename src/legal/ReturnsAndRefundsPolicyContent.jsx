@@ -6,12 +6,12 @@ export default function ReturnsAndRefundsPolicyContent() {
       </p>
 
       <p className="text-xs text-gray-600">
-        En <strong>ONERED JWG532, S.R.L. </strong>, la transparencia y satisfacción de nuestros clientes son fundamentales. Este documento regula las transacciones, cancelaciones, devoluciones y reembolsos aplicados a los pagos realizados a través de nuestra pasarela digital provista por <strong>Servicios Digitales Popular (Azul)</strong>.
+        En <strong>ONERED JWG532, S.R.L.</strong>, la transparencia y satisfacción de nuestros clientes son fundamentales. Este documento regula las transacciones, cancelaciones, devoluciones y reembolsos aplicados a los pagos realizados a través de nuestra pasarela digital provista por <strong>Servicios Digitales Popular (Azul)</strong>.
       </p>
 
       {/* 1. IMPUESTOS Y CARGOS DE LEY */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">1. Impuestos y Cargos de Ley Aplicables</h4>
+        <h4 className="font-bold text-gray-900 mb-1">1. Impuestos y cargos de ley aplicables</h4>
         <p className="mb-2 text-xs">
           Todas las transacciones procesadas mediante tarjeta de crédito o débito incluyen los impuestos regulados por la Dirección General de Impuestos Internos (DGII) y el Instituto Dominicano de las Telecomunicaciones (INDOTEL):
         </p>
@@ -27,12 +27,12 @@ export default function ReturnsAndRefundsPolicyContent() {
 
       {/* 2. POLÍTICA DE NO DEVOLUCIÓN DE EFECTIVO Y TRATAMIENTO DE SALDOS */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">2. Política de No Devolución de Efectivo y Saldos a Favor</h4>
+        <h4 className="font-bold text-gray-900 mb-1">2. Política de no devolución de efectivo y saldos a favor</h4>
         <p className="text-xs mb-2">
-          ONERED JWG532, S.R.L establece que <strong>no se realizan devoluciones de dinero en efectivo, transferencias bancarias directas ni reversiones automáticas</strong> por concepto de pagos recurrentes, saldos generados voluntariamente por el usuario o montos depositados por error del cliente.
+          ONERED JWG532, S.R.L. establece que <strong>no se realizan devoluciones de dinero en efectivo, transferencias bancarias directas ni reversiones automáticas</strong> por concepto de pagos recurrentes, saldos generados voluntariamente por el usuario o montos depositados por error del cliente.
         </p>
         <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500 text-xs text-blue-900">
-          <strong>Tratamiento de Saldos a Favor:</strong> Cualquier monto pagado en exceso o pago duplicado debidamente validado por el departamento financiero no será devuelto en efectivo. Dicho importe se registrará de forma inmediata y exclusiva como un <strong>crédito / balance a favor del cliente</strong>, el cual se aplicará automáticamente en las próximas facturas mensuales del servicio.
+          <strong>Tratamiento de saldos a favor:</strong> Cualquier monto pagado en exceso o pago duplicado debidamente validado por el departamento financiero no será devuelto en efectivo. Dicho importe se registrará de forma inmediata y exclusiva como un <strong>crédito / balance a favor del cliente</strong>, el cual se aplicará automáticamente en las próximas facturas mensuales del servicio.
         </div>
       </div>
 

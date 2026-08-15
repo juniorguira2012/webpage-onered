@@ -2,12 +2,12 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
   return (
     <div className="space-y-4 text-justify text-sm text-gray-700 leading-relaxed">
       <p className="font-bold border-b pb-2 text-blue-600 uppercase">
-        Condiciones de Uso y Políticas de Pago de Nuestros Servicios
+        Condiciones de uso y políticas de pagos de nuestros servicios
       </p>
 
       {/* FICHA TÉCNICA / IDENTIFICACION DE COMERCIO */}
       <div className="bg-gray-50 p-4 rounded-lg text-xs space-y-1 text-gray-600 border border-gray-200 mt-4">
-        <p className="font-bold text-gray-800 text-sm mb-1">Identificacion comercial</p>
+        <p className="font-bold text-gray-800 text-sm mb-1">Identificación comercial</p>
         <p><strong>Razón Social / Empresa:</strong> ONERED JWG532, S.R.L.</p>
         <p><strong>RNC:</strong> 131-93314-9</p>
         <p><strong>Atención al Cliente:</strong> (809) 422-5424 / (809) 447-4575</p>
@@ -41,10 +41,10 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
 
       {/* 2. SECCIÓN TÉCNICA Y COBERTURA */}
       <div className="space-y-2">
-        <h4 className="font-bold text-gray-900">2. Cobertura wiFi y soporte técnico</h4>
+        <h4 className="font-bold text-gray-900">2. Cobertura Wifi y soporte técnico</h4>
         <ol start="8" className="list-decimal ml-5 space-y-2">
-          <li>Todos los equipos inalámbricos tienen un límite de alcance. No nos comprometemos a abarcar con señal WIFI todos los espacios de la casa o negocio; para ello se requiere un <strong>Repetidor WiFi</strong> (con costo adicional).</li>
-          <li>El usuario es responsable de administrar la conexión y el cambio de contraseña. Los cambios de contraseña realizados por técnicos después de la instalación conllevan un costo adicional. <strong>La asistencia técnica llega hasta el router WiFi; NO manipulamos dispositivos internos (celulares, computadoras, Smart TVs).</strong></li>
+          <li>Todos los equipos inalámbricos tienen un límite de alcance. No nos comprometemos a abarcar con señal Wifi todos los espacios de la casa o negocio; para ello se requiere un <strong>Repetidor WiFi</strong> (con costo adicional).</li>
+          <li>El usuario es responsable de administrar la conexión y el cambio de contraseña. Los cambios de contraseña realizados por técnicos después de la instalación conllevan un costo adicional. <strong>La asistencia técnica llega hasta el router WiFi; NO manipulamos dispositivos internos (celulares, computadoras, Smart TV).</strong></li>
           <li><strong>Está prohibido comercializar, ceder, traspasar o revender el servicio</strong> sin autorización previa por escrito. El incumplimiento conlleva la suspensión o cancelación inmediata sin previo aviso.</li>
         </ol>
       </div>
@@ -57,9 +57,9 @@ export default function TermsOfServiceContent({ openPrivacy, openCardSecurity, o
       <div className="space-y-2 border-t pt-3">
         <h4 className="font-bold text-gray-900">3. Pagos en línea y procesamiento de tarjetas</h4>
         <ul className="list-disc ml-5 space-y-2 text-xs">
-          <li><strong>Moneda de Transacción:</strong> Todas las facturas y cobros a través del portal en línea son procesados exclusivamente en <strong>Pesos Dominicanos (DOP$ / RD$)</strong>.</li>
-          <li><strong>Pasarela de Pago Segura:</strong> Los pagos mediante tarjeta de crédito o débito son procesados a través de la pasarela certificada PCI-DSS de <strong>Azul (Servicios Digitales Popular)</strong>. <strong>ONERED JWG532, S.R.L. no almacena ni guarda números de tarjeta, fechas de vencimiento ni códigos de seguridad (CVV)</strong> en sus servidores.</li>
-          <li><strong>Política de Devolución e Impugnaciones:</strong> Los pagos realizados a través del portal se aplican de forma inmediata al balance de la cuenta del cliente. Si se genera un pago por error o duplicado, el monto pagado será acreditado como un balance a favor para la siguiente factura. No se realizan reembolsos en efectivo por conceptos de instalación o pagos de mensualidad aplicados correctamente.</li>
+          <li><strong>Moneda de transacción:</strong> Todas las facturas y cobros a través del portal en línea son procesados exclusivamente en <strong>Pesos Dominicanos (DOP$ / RD$)</strong>.</li>
+          <li><strong>Pasarela de pago segura:</strong> Los pagos mediante tarjeta de crédito o débito son procesados a través de la pasarela certificada PCI-DSS de <strong>Azul (Servicios Digitales Popular)</strong>. <strong>ONERED JWG532, S.R.L. no almacena ni guarda números de tarjeta, fechas de vencimiento ni códigos de seguridad (CVV)</strong> en sus servidores.</li>
+          <li><strong>Política de devolución e impugnaciones:</strong> Los pagos realizados a través del portal se aplican de forma inmediata al balance de la cuenta del cliente. Si se genera un pago por error o duplicado, el monto pagado será acreditado como un balance a favor para la siguiente factura. No se realizan reembolsos en efectivo por conceptos de instalación o pagos de mensualidad aplicados correctamente.</li>
         </ul>
       </div>
 

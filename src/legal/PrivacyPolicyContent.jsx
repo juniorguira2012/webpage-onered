@@ -9,9 +9,9 @@ export default function PrivacyPolicyContent() {
         <h4 className="font-bold text-gray-900 mb-1">1. Datos que recopilamos</h4>
         <p className="mb-2">Podemos recopilar las siguientes categorías de información:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Datos de identificación:</strong> nombre, cédula, dirección, teléfono y correo electrónico.</li>
-          <li><strong>Datos de servicio:</strong> plan contratado, historial de facturación, consumo y soporte técnico.</li>
-          <li><strong>Datos de navegación:</strong> dirección IP, tipo de navegador, páginas visitadas y cookies técnicas del sitio web.</li>
+          <li><strong>Informes de identificación:</strong> nombre, cédula, dirección, teléfono y correo electrónico.</li>
+          <li><strong>Información de servicio:</strong> plan contratado, historial de facturación, consumo y soporte técnico.</li>
+          <li><strong>Registros de navegación:</strong> dirección IP, tipo de navegador, páginas visitadas y cookies técnicas del sitio web.</li>
           <li><strong>Datos de pago:</strong> referencias de transacción, comprobantes y autorizaciones. Los datos completos de tarjeta son procesados exclusivamente por la pasarela certificada PCI-DSS (Azul); ONERED no almacena números de tarjeta ni códigos CVV.</li>
         </ul>
       </div>

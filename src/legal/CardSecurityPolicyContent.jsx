@@ -4,7 +4,7 @@ export default function CardSecurityPolicyContent() {
       {/* ENCABEZADO Y MARCA */}
       <div>
         <h3 className="text-lg font-bold text-gray-900 border-b pb-1">
-          Política de Seguridad para la Transmisión de Datos de Tarjetas
+          Política de seguridad para la transmisión de datos de tarjetas
         </h3>
         <p className="text-xs text-blue-600 font-medium mt-1">
           Protección de pagos con tarjeta · ONERED JWG532, S.R.L.
@@ -34,7 +34,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* 1. CIFRADO DE DATOS */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">1. Cifrado de Datos y Protocolos SSL/TLS</h4>
+        <h4 className="font-bold text-gray-900 mb-1">1. Cifrado de datos y protocolos SSL/TLS</h4>
         <p className="text-xs">
           Toda la comunicación entre su navegador y nuestro sitio web se realiza mediante el protocolo seguro <strong>HTTPS (TLS 1.2 o superior)</strong>. La información sensible del tarjetahabiente se transmite cifrada utilizando algoritmos <strong>SSL (Secure Sockets Layer) y AES-256</strong> directamente hacia la entidad procesadora, garantizando la privacidad e integridad durante el tránsito.
         </p>
@@ -42,7 +42,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* 2. PROCESAMIENTO POR PASARELA CERTIFICADA */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">2. Procesamiento por Pasarela Certificada (Azul)</h4>
+        <h4 className="font-bold text-gray-900 mb-1">2. Procesamiento por pasarela certificada (Azul)</h4>
         <p className="text-xs">
           Los pagos en línea son capturados y procesados externamente por <strong>Azul (Servicios Digitales Popular, Banco Popular Dominicano)</strong>, plataforma certificada internacionalmente bajo el estándar de seguridad <strong>PCI-DSS</strong>. Los proveedores de servicios de pago solo utilizan la información necesaria para completar el proceso de cobro contratado.
         </p>
@@ -50,7 +50,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* 3. DATOS QUE NO ALMACENAMOS */}
       <div className="bg-red-50 p-3 rounded-lg border-l-4 border-red-500 text-xs text-red-900">
-        <strong className="block mb-1 font-bold">3. Datos Sensibles que NO Almacenamos:</strong>
+        <strong className="block mb-1 font-bold">3. Datos sensibles que no almacenamos:</strong>
         <p className="mb-1">De acuerdo con las regulaciones de la industria de tarjetas, ONERED JWG532, S.R.L. no recopila, procesa ni almacena en sus servidores:</p>
         <ul className="list-disc pl-5 space-y-0.5">
           <li>Número completo de la tarjeta de crédito o débito (PAN).</li>
@@ -62,7 +62,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* 4. RESPONSABILIDADES DEL TARJETAHABIENTE */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">4. Responsabilidades del Tarjetahabiente</h4>
+        <h4 className="font-bold text-gray-900 mb-1">4. Responsabilidades del tarjeta habiente</h4>
         <ul className="list-disc pl-5 space-y-1 text-xs">
           <li>Asegurarse de estar navegando en el dominio oficial antes de ingresar información de pago.</li>
           <li>No compartir con terceros los códigos temporales de autenticación (OTP / 3DS) provistos por su entidad bancaria.</li>
@@ -73,7 +73,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* 5. MONEDA DE OPERACIÓN */}
       <div>
-        <h4 className="font-bold text-gray-900 mb-1">5. Moneda y Montos Procesados</h4>
+        <h4 className="font-bold text-gray-900 mb-1">5. Moneda y montos procesados</h4>
         <p className="text-xs">
           Todas las transacciones en línea se procesan exclusivamente en <strong>Pesos Dominicanos (RD$ / DOP$)</strong>. El valor debitado de su cuenta corresponderá exactamente al balance de la factura de servicio generada antes de autorizar el pago.
         </p>
@@ -81,7 +81,7 @@ export default function CardSecurityPolicyContent() {
 
       {/* FICHA CORPORATIVA Y CONTACTO DE INCIDENTES */}
       <div className="bg-gray-50 p-4 rounded-lg text-xs space-y-1 text-gray-600 border border-gray-200 mt-4">
-        <p className="font-bold text-gray-800 text-sm mb-1">Soporte de Pagos y Reporte de Incidentes</p>
+        <p className="font-bold text-gray-800 text-sm mb-1">Soporte de pagos y reporte de incidentes</p>
         <p><strong>Razón Social:</strong> ONERED JWG532, S.R.L.</p>
         <p><strong>Nombre Comercial:</strong> ONERED</p>
         <p><strong>RNC:</strong>  131-93314-9</p>
