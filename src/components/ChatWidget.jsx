@@ -72,7 +72,7 @@ const ChatWidget = () => {
         s.parentNode.insertBefore(g, s);
         g.onload = function() {
           window.chatwootSDK.run({
-            websiteToken: 'coVW3GVVA4bpCSXrfLwGrJSo',
+            websiteToken: '',
             baseUrl: BASE_URL,
           });
         };
