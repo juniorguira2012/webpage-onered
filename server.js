@@ -9,23 +9,25 @@ import helmet from 'helmet';
 
 const app = express();
 
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 
+app.use(helmet());
 app.use(cors());
 app.disable('x-powered-by');
-app.use(helmet());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Limitador de tasa para las consultas
 const limpiadorConsultas = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 15, // máximo 15 peticiones por ventana
+  standardHeaders: true, // Devuelve info de rate limit en cabeceras `RateLimit-*`
+  legacyHeaders: false, // Desactiva cabeceras `X-RateLimit-*`
   message: { 
     exito: false, 
     mensaje: "Demasiadas consultas desde esta IP. Por favor intente más tarde." 
