@@ -8,6 +8,9 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
 const app = express();
+
+app.set('trust proxy', 1);
+
 app.use(cors());
 app.disable('x-powered-by');
 app.use(helmet());
