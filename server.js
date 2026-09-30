@@ -9,7 +9,7 @@ import helmet from 'helmet';
 
 const app = express();
 
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 app.use(helmet());
 app.use(cors());
@@ -215,7 +215,7 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
   try {
     const { idFactura, idCliente, monto, azulOrderId, authorizationCode } = req.body;
 
-    // console.log("📥 [backend] Recibida solicitud para registrar pago:", req.body);
+    console.log("📥 [backend] Recibida solicitud para registrar pago:", req.body);
 
     if (!idFactura || !monto) {
       return res.status(400).json({ 
@@ -238,7 +238,7 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
       transaccion: azulOrderId || authorizationCode || 'AZUL-ONLINE'
     };
 
-    //console.log("📡 Enviando a Mikrowisp PaidInvoice:", mikrowispEndpoint);
+    console.log("📡 Enviando a Mikrowisp PaidInvoice:", mikrowispEndpoint);
 
     const resMW = await fetch(mikrowispEndpoint, {
       method: 'POST',
@@ -250,7 +250,7 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
     });
 
     const dataMW = await resMW.json();
-    // console.log("📡 Respuesta de Mikrowisp:", dataMW);
+    console.log("📡 Respuesta de Mikrowisp:", dataMW);
 
     if (dataMW.estado === 'exito' || dataMW.estado === 'success') {
       return res.json({ 
@@ -361,7 +361,7 @@ app.post('/api/facturas/consultar', async (req, res) => {
         listaFacturas = dataTodas.datos;
       }
 
-      //console.log(`📊 Facturas totales recuperadas de Mikrowisp para cliente #${clienteId}: ${listaFacturas.length}`);
+      console.log(`📊 Facturas totales recuperadas de Mikrowisp para cliente #${clienteId}: ${listaFacturas.length}`);
 
       // Clasificar por estado
       listaFacturas.forEach(f => {
