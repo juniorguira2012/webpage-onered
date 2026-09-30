@@ -1,4 +1,4 @@
-import img1 from "/public/assets/images/teleferico-alcarrizos.jpeg";
+import img1 from "/assets/images/teleferico-alcarrizos.jpeg";
 import { Flag, Telescope, HeartHandshake } from "lucide-react";
 import React from "react";
 import { useTranslation } from 'react-i18next'; // Importamos el hook

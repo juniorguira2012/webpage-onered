@@ -1,3 +1,4 @@
+
 version: '3.8'
 
 services:
@@ -23,8 +24,8 @@ services:
       - AZUL_URL_PRUEBAS=${AZUL_URL_PRUEBAS:-https://pruebas.azul.com.do/PaymentPage/}
       - AZUL_URL_PRODUCCION_PRIMARY=${AZUL_URL_PRODUCCION_PRIMARY:-https://pagos.azul.com.do/PaymentPage/Default.aspx}
       - AZUL_URL_PRODUCCION_SECONDARY=${AZUL_URL_PRODUCCION_SECONDARY:-https://contpagos.azul.com.do/PaymentPage/Default.aspx}
-      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://oneredrd.com/pago-exitoso}
-      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://oneredrd.com/pago-declinado}
+      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://oneredrd.com/pago-completado}
+      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://oneredrd.com/rechazado}
       - AZUL_CANCEL_URL=${AZUL_CANCEL_URL:-https://oneredrd.com/pago-cancelado}
     networks:
       - network_public

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { User, ShieldCheck, FileUp, Search, ExternalLink, Menu, CreditCard, X } from "lucide-react"; 
-import logo from "/public/assets/logos/logo-onered.png";
+import logo from "/assets/logos/logo-onered.png";
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from "./LanguageSelector";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate para redirección

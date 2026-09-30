@@ -57,12 +57,18 @@ export default function ConsultaFactura() {
   const handleProcederPagoAzul = async (factura) => {
     if (!factura || !datosCliente) return;
 
+    // Guardar datos temporales para cuando regrese de Azul
+    localStorage.setItem('pago_idFactura', factura.idFactura);
+    localStorage.setItem('pago_idCliente', datosCliente.id);
+    localStorage.setItem('pago_monto', factura.monto);
+
     setCargando(true);
     try {
       const res = await fetch('/api/pagos/crear-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idFactura: factura.idFactura,
           monto: factura.monto,
           clienteId: datosCliente.id,
           planNombre: factura.concepto || `Pago Factura #${factura.idFactura}`
@@ -81,6 +87,7 @@ export default function ConsultaFactura() {
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = data.targetUrl;
+      form.setAttribute('target', '_self');
 
       Object.keys(data.formData).forEach((key) => {
         const input = document.createElement('input');
