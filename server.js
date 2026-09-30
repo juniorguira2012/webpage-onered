@@ -9,9 +9,26 @@ import helmet from 'helmet';
 
 const app = express();
 
+// 1. Confiar exactamente en el proxy inverso (Traefik)
 app.set('trust proxy', 1);
 
-app.use(helmet());
+// 2. Configuración de Helmet permitiendo la redirección/submit a Azul
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        // Permitir envíos de formularios hacia Azul (Pruebas y Producción)
+        "form-action": [
+          "'self'", 
+          "https://pruebas.azul.com.do", 
+          "https://pagos.azul.com.do"
+        ],
+      },
+    },
+  })
+);
+
 app.use(cors());
 app.disable('x-powered-by');
 
@@ -22,12 +39,13 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Limitador de tasa para las consultas
+// 3. Limitador de tasa configurado para Traefik sin lanzar advertencias de validación
 const limpiadorConsultas = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 15, // máximo 15 peticiones por ventana
-  standardHeaders: true, // Devuelve info de rate limit en cabeceras `RateLimit-*`
-  legacyHeaders: false, // Desactiva cabeceras `X-RateLimit-*`
+  standardHeaders: true,
+  legacyHeaders: false,
+  validate: { trustProxy: false }, // 👈 Silencia la validación permisiva de proxy
   message: { 
     exito: false, 
     mensaje: "Demasiadas consultas desde esta IP. Por favor intente más tarde." 
