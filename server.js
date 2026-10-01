@@ -399,7 +399,6 @@ function enmascararCedula(cedula) {
   if (limpia.length < 5) return '***';
   return limpia.substring(0, 3) + '*****' + limpia.slice(-3);
 }
-
 // ==========================================
 // ENDPOINT 3: Datos Completos + Facturas (Pendientes y Pagadas)
 // ==========================================
@@ -417,12 +416,16 @@ app.post('/api/facturas/consultar', async (req, res) => {
     let baseUrl = MIKROWISP_CONFIG.url || "https://mikrowisp.oneredrd.com";
     baseUrl = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
     const tokenVal = MIKROWISP_CONFIG.apiKey;
-    const valorLimpio = valor.toString().trim();
+    const valorOriginal = valor.toString().trim();
 
     const payloadMikrowisp = { token: tokenVal };
+
     if (tipo === 'id' || tipo === 'idcliente') {
-      payloadMikrowisp.idcliente = valorLimpio.replace(/\D/g, '');
+      payloadMikrowisp.idcliente = valorOriginal.replace(/\D/g, '');
     } else {
+      const valorLimpio = valorOriginal.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      
+      // Mikrowisp busca en la propiedad 'cedula' tanto cédula como pasaporte/RNC según como esté registrado
       payloadMikrowisp.cedula = valorLimpio;
     }
 
@@ -439,8 +442,8 @@ app.post('/api/facturas/consultar', async (req, res) => {
       return res.json({
         exito: false,
         mensaje: (tipo === 'id' || tipo === 'idcliente')
-          ? `No se encontró ningún cliente con el ID #${valorLimpio}.` 
-          : `No se encontró ningún cliente con la cédula ${valorLimpio}.`
+          ? `No se encontró ningún cliente con el ID #${valorOriginal}.` 
+          : `No se encontró ningún cliente con el documento / pasaporte ${valorOriginal}.`
       });
     }
 
@@ -503,8 +506,6 @@ app.post('/api/facturas/consultar', async (req, res) => {
       console.error("❌ Error obteniendo facturas del cliente:", e);
     }
 
-
-
     // 3. Responder al Frontend
     return res.json({
       exito: true,
@@ -512,13 +513,13 @@ app.post('/api/facturas/consultar', async (req, res) => {
         id: clienteId,
         nombre: clienteNombre,
         estado: cliente.estado || 'ACTIVO',
-        // 🔹 Enmascarar cédula antes de enviarla
+        // 🔹 Enmascarar documento (funciona automáticamente para Cédula o Pasaporte)
         cedula: enmascararCedula(cliente.cedula),
         cantSinPagar: parseInt(facturacion.facturas_nopagadas || facturasPendientes.length, 10),
         totalPendiente: parseFloat(facturacion.total_facturas || 0)
       },
       facturasPendientes,
-      facturasPagadas // <-- Contiene exactamente máximo 5 elementos
+      facturasPagadas
     });
 
   } catch (error) {

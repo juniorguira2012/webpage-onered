@@ -180,7 +180,7 @@ export default function ConsultaFactura() {
                     }`}
                   >
                     ID de cliente
-                  </button>
+                </button>
                   <button
                     type="button"
                     onClick={() => { setTipoBusqueda('cedula'); setValorBusqueda(''); }}
@@ -188,25 +188,28 @@ export default function ConsultaFactura() {
                       tipoBusqueda === 'cedula' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    Cédula
+                    Cédula / Pasaporte
                   </button>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {tipoBusqueda === 'id' ? 'ID de cliente' : 'Cédula / RNC'}
+                  {tipoBusqueda === 'id' ? 'ID de cliente' : 'Cédula / RNC / Pasaporte'}
                 </label>
                 <input
                   type="text"
                   required
                   value={valorBusqueda}
                   onChange={(e) => setValorBusqueda(e.target.value)}
-                  placeholder={tipoBusqueda === 'id' ? 'Ej: 250' : 'Ej: 00100000000'}
+                  placeholder={
+                    tipoBusqueda === 'id' 
+                      ? 'Ej: 250' 
+                      : 'Ej: 001-0000000-0 o A1234567'
+                  }
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
               </div>
-
               <button
                 type="submit"
                 disabled={cargando}
