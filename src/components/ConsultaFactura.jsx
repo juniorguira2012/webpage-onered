@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { ArrowLeft, CreditCard, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, CreditCard, FileText, CheckCircle2, ShieldCheck } from 'lucide-react';
 import logo from '/assets/logos/logo-onered.png';
-import CheckoutAzul from './CheckoutAzul'; // 1. IMPORTAMOS EL COMPONENTE CHECKOUT
+import CheckoutAzul from './CheckoutAzul'; 
 
 export default function ConsultaFactura() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function ConsultaFactura() {
   const [facturasPagadas, setFacturasPagadas] = useState([]);
   const [tabFacturas, setTabFacturas] = useState('pendientes');
 
-  // 2. ESTADO PARA LA FACTURA SELECCIONADA
+  // ESTADO PARA LA TRANSACCIÓN SELECCIONADA (Ahora consolida todo el balance)
   const [facturaSeleccionada, setFacturaSeleccionada] = useState(null);
 
   // Consultar cliente y facturas
@@ -53,14 +53,33 @@ export default function ConsultaFactura() {
     }
   };
 
-  // 3. ENVIAR FORMULARIO POST A LA PASARELA DE AZUL (Ejecutado desde CheckoutAzul)
-  const handleProcederPagoAzul = async (factura) => {
-    if (!factura || !datosCliente) return;
+  // 1. INICIAR EL PROCESO CONSOLIDADO DE PAGO TOTAL
+  const handleIniciarPagoTotal = () => {
+    if (!facturasPendientes.length || !datosCliente) return;
 
-    // Guardar datos temporales para cuando regrese de Azul
-    localStorage.setItem('pago_idFactura', factura.idFactura);
+    // Crear un objeto de pago unificado que consolida todas las facturas
+    const idsFacturas = facturasPendientes.map(f => f.idFactura);
+    const montoTotal = datosCliente.totalPendiente;
+
+    const objetoPagoConsolidado = {
+      idFactura: idsFacturas.join('-'), // Ej: "1050-1088"
+      idsLista: idsFacturas,
+      monto: montoTotal,
+      concepto: `Pago Total Balance Pendiente (${facturasPendientes.length} facturas)`,
+      esConsolidado: facturasPendientes.length > 1
+    };
+
+    setFacturaSeleccionada(objetoPagoConsolidado);
+  };
+
+  // 2. ENVIAR FORMULARIO POST A LA PASARELA DE AZUL
+  const handleProcederPagoAzul = async (objetoPago) => {
+    if (!objetoPago || !datosCliente) return;
+
+    // Guardar datos temporales para cuando regrese la respuesta de Azul
+    localStorage.setItem('pago_idFactura', objetoPago.idFactura);
     localStorage.setItem('pago_idCliente', datosCliente.id);
-    localStorage.setItem('pago_monto', factura.monto);
+    localStorage.setItem('pago_monto', objetoPago.monto);
 
     setCargando(true);
     try {
@@ -68,10 +87,11 @@ export default function ConsultaFactura() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          idFactura: factura.idFactura,
-          monto: factura.monto,
+          idFactura: objetoPago.idFactura,
+          idsFacturas: objetoPago.idsLista || [objetoPago.idFactura],
+          monto: objetoPago.monto,
           clienteId: datosCliente.id,
-          planNombre: factura.concepto || `Pago Factura #${factura.idFactura}`
+          planNombre: objetoPago.concepto
         })
       });
 
@@ -106,7 +126,7 @@ export default function ConsultaFactura() {
     }
   };
 
-  // 4. SI HAY UNA FACTURA SELECCIONADA, MOSTRAR EL COMPONENTE CHECKOUTAZUL
+  // VISTA CHECKOUT AZUL SI SE TIENE UN PAGO PENDIENTE SELECCIONADO
   if (facturaSeleccionada) {
     return (
       <CheckoutAzul
@@ -219,23 +239,40 @@ export default function ConsultaFactura() {
               </div>
             </div>
 
+            {/* BOTÓN ÚNICO OBLIGATORIO DE PAGO TOTAL */}
+            {facturasPendientes.length > 0 && (
+              <div className="bg-blue-50/80 border border-blue-100 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center gap-2 text-blue-900 font-bold text-xs">
+                  <ShieldCheck size={18} className="text-blue-600 shrink-0" />
+                  <span>Para reactivar o mantener el servicio debes pagar el balance total.</span>
+                </div>
+
+                <button
+                  onClick={handleIniciarPagoTotal}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
+                >
+                  <CreditCard size={18} /> Pagar Total RD$ {datosCliente.totalPendiente.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
+                </button>
+              </div>
+            )}
+
             <div className="flex justify-between items-center pt-2">
-              <span className="text-xs font-black uppercase tracking-wider text-slate-400">Facturas</span>
+              <span className="text-xs font-black uppercase tracking-wider text-slate-400">Detalle de Facturas</span>
               <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
                 <button
                   type="button"
                   onClick={() => setTabFacturas('pendientes')}
                   className={`px-3 py-1.5 text-xs font-bold rounded-lg transition ${
-                    tabFacturas === 'pendientes' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                    tabFacturas === 'pendientes' ? 'bg-yellow-700 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Pendientes
+                  Pendientes ({facturasPendientes.length})
                 </button>
                 <button
                   type="button"
                   onClick={() => setTabFacturas('pagadas')}
                   className={`px-3 py-1.5 text-xs font-bold rounded-lg transition ${
-                    tabFacturas === 'pagadas' ? 'bg-white text-slate-800 shadow-sm border border-slate-200/50' : 'text-slate-600 hover:text-slate-900'
+                    tabFacturas === 'pagadas' ? 'bg-green-600 text-white shadow-sm border border-slate-200/50' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   Pagadas
@@ -243,7 +280,7 @@ export default function ConsultaFactura() {
               </div>
             </div>
 
-            {/* PESTAÑA FACTURAS PENDIENTES */}
+            {/* PESTAÑA FACTURAS PENDIENTES (MODO SOLO LECTURA/DESGLOSE) */}
             {tabFacturas === 'pendientes' && (
               <div className="space-y-3">
                 {facturasPendientes.length === 0 ? (
@@ -252,7 +289,7 @@ export default function ConsultaFactura() {
                   </div>
                 ) : (
                   facturasPendientes.map((fac) => (
-                    <div key={fac.idFactura} className="border border-slate-200/80 rounded-2xl p-4 space-y-3 bg-white shadow-sm hover:border-blue-200 transition">
+                    <div key={fac.idFactura} className="border border-slate-200/80 rounded-2xl p-4 space-y-1 bg-white shadow-sm">
                       <div className="flex justify-between items-start">
                         <div>
                           <h4 className="font-bold text-slate-900 text-sm">Factura #{fac.idFactura}</h4>
@@ -265,17 +302,9 @@ export default function ConsultaFactura() {
                         </span>
                       </div>
 
-                      <div className="text-xl font-black text-slate-900">
+                      <div className="text-lg font-black text-slate-800 pt-1">
                         RD$ {fac.monto.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
                       </div>
-
-                      {/* 5. SELECCIONA LA FACTURA PARA PASAR AL CHECKOUT */}
-                      <button
-                        onClick={() => setFacturaSeleccionada(fac)}
-                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-blue-500/10 flex items-center justify-center gap-2"
-                      >
-                        <CreditCard size={15} /> Pagar con Azul
-                      </button>
                     </div>
                   ))
                 )}

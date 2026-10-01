@@ -1,40 +1,41 @@
-
 version: '3.8'
 
 services:
-  web-onered:
-    build: .
-    container_name: webpage-onered
-    restart: always
-    env_file:
-      - .env
-    environment:
-      - PORT=${PORT:-3000}
-      - AZUL_ENV=${AZUL_ENV:-production}
-      - AZUL_IS_TESTING=${AZUL_IS_TESTING:-true}
-      - MIKROWISP_URL=${MIKROWISP_URL}
-      - MIKROWISP_API_KEY=${MIKROWISP_API_KEY}
-      - AZUL_MERCHANT_ID_TEST=${AZUL_MERCHANT_ID_TEST:-APPROVED_MERCHANT}
-      - AZUL_MERCHANT_ID_PROD=${AZUL_MERCHANT_ID_PROD}
-      - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-OneRedRD}
-      - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
-      - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
-      - AZUL_AUTH_KEY_TEST=${AZUL_AUTH_KEY_TEST:-APPROVED_AUTH_KEY}
-      - AZUL_AUTH_KEY_PROD=${AZUL_AUTH_KEY_PROD}
-      - AZUL_URL_PRUEBAS=${AZUL_URL_PRUEBAS:-https://pruebas.azul.com.do/PaymentPage/}
-      - AZUL_URL_PRODUCCION_PRIMARY=${AZUL_URL_PRODUCCION_PRIMARY:-https://pagos.azul.com.do/PaymentPage/Default.aspx}
-      - AZUL_URL_PRODUCCION_SECONDARY=${AZUL_URL_PRODUCCION_SECONDARY:-https://contpagos.azul.com.do/PaymentPage/Default.aspx}
-      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://oneredrd.com/pago-completado}
-      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://oneredrd.com/rechazado}
-      - AZUL_CANCEL_URL=${AZUL_CANCEL_URL:-https://oneredrd.com/pago-cancelado}
+  web:
+    image: onered-web:v1.4.3
     networks:
       - network_public
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.onered.rule=Host(`oneredrd.com`) || Host(`www.oneredrd.com`)"
-      - "traefik.http.routers.onered.entrypoints=websecure"
-      - "traefik.http.routers.onered.tls.certresolver=letsencryptresolver"
-      - "traefik.http.services.onered.loadbalancer.server.port=3000"
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web.rule=Host(`www.oneredrd.com`)"
+        - "traefik.http.routers.web.entrypoints=websecure"
+        - "traefik.http.routers.web.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.web.loadbalancer.server.port=3000"
+    
+    # 🔹 INYECCIÓN DE VARIABLES DE ENTORNO AL CONTENEDOR
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      
+      # CONFIGURACIÓN MIKROWISP
+      - MIKROWISP_URL=https://mikrowisp.oneredrd.com
+      - MIKROWISP_API_KEY=ZjBFQi8zbTEyL1pqKzhXb3hOUVBQUT09
+      
+      # ENTORNO Y PACA AZUL
+      - AZUL_IS_TESTING=${AZUL_IS_TESTING:-false}
+      - AZUL_MERCHANT_ID=39038540035
+      - AZUL_AUTH_KEY=asdhakjshdkjasdasmndajksdkjaskldga8odya9d8yoasyd98asdyaisdhoaisyd0a8sydoashd8oasydoiahdpiashd09ayusidhaos8dy0a8dya08syd0a8ssdsax
+      - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-ONERED JWG532, S.R.L.}
+      - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
+      - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
+      
+      # URLS DE RETORNO
+      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://www.oneredrd.com/pago-completado}
+      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://www.oneredrd.com/pago-rechazado}
+      - AZUL_CANCEL_URL=${AZUL_CANCEL_URL:-https://www.oneredrd.com/consulta-factura}
 
 networks:
   network_public:

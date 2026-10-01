@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv/config'; // Cargar variables de entorno desde .env
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -244,41 +244,95 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
 
     let baseUrl = process.env.MIKROWISP_URL || "https://mikrowisp.oneredrd.com";
     baseUrl = baseUrl.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
-    
     const mikrowispEndpoint = `${baseUrl}/api/v1/PaidInvoice`;
+    const token = process.env.MIKROWISP_API_KEY || MIKROWISP_CONFIG.apiKey;
 
-    // Objeto JSON esperado por Mikrowisp PaidInvoice
-    const payloadMikrowisp = {
-      token: process.env.MIKROWISP_API_KEY || MIKROWISP_CONFIG.apiKey,
-      idfactura: String(idFactura).trim(),
-      monto: parseFloat(monto),
-      pasarela: 'azul', // Clave de la pasarela en Mikrowisp
-      transaccion: azulOrderId || authorizationCode || 'AZUL-ONLINE'
-    };
+    // 1. Convertir idFactura en array (soporta "1050" o "1050-1088")
+    const listaFacturas = String(idFactura).split('-').map(id => id.trim()).filter(Boolean);
 
-    console.log("📡 Enviando a Mikrowisp PaidInvoice:", mikrowispEndpoint);
+    // 2. Si es una sola factura, procesar de forma normal
+    if (listaFacturas.length === 1) {
+      const payloadMikrowisp = {
+        token,
+        idfactura: listaFacturas[0],
+        monto: parseFloat(monto),
+        pasarela: 'azul',
+        transaccion: azulOrderId || authorizationCode || 'AZUL-ONLINE'
+      };
 
-    const resMW = await fetch(mikrowispEndpoint, {
+      console.log(`📡 Enviando a Mikrowisp PaidInvoice (Factura #${listaFacturas[0]}):`, mikrowispEndpoint);
+
+      const resMW = await fetch(mikrowispEndpoint, {
+        method: 'POST',
+        headers: { 'accept': 'application/json', 'content-type': 'application/json' },
+        body: JSON.stringify(payloadMikrowisp)
+      });
+
+      const dataMW = await resMW.json();
+      console.log("📡 Respuesta de Mikrowisp:", dataMW);
+
+      if (dataMW.estado === 'exito' || dataMW.estado === 'success') {
+        return res.json({ exito: true, mensaje: "Pago registrado y servicio activado en Mikrowisp." });
+      } else {
+        return res.status(400).json({ exito: false, mensaje: dataMW.mensaje || "Error al aplicar el pago en Mikrowisp." });
+      }
+    }
+
+    // 3. Si son VARIAS facturas (Pago Consolidado), consultar montos individuales de cada una en Mikrowisp
+    console.log(`🔄 Procesando pago consolidado para ${listaFacturas.length} facturas:`, listaFacturas);
+
+    let pagosExitosos = 0;
+    let errores = [];
+
+    // Consultar facturas pendientes del cliente para obtener los montos exactos de cada factura
+    const resConsultar = await fetch(`${baseUrl}/api/v1/GetInvoices`, {
       method: 'POST',
-      headers: { 
-        'accept': 'application/json',
-        'content-type': 'application/json' 
-      },
-      body: JSON.stringify(payloadMikrowisp)
+      headers: { 'accept': 'application/json', 'content-type': 'application/json' },
+      body: JSON.stringify({ token, idcliente: String(idCliente) })
     });
+    
+    const dataConsultar = await resConsultar.json();
+    const facturasOriginales = dataConsultar.facturas || dataConsultar.datos || [];
 
-    const dataMW = await resMW.json();
-    console.log("📡 Respuesta de Mikrowisp:", dataMW);
+    for (const idFac of listaFacturas) {
+      // Buscar el monto exacto de la factura individual
+      const facEncontrada = facturasOriginales.find(f => String(f.idfactura || f.id || f.idFactura) === idFac);
+      const montoFac = facEncontrada ? parseFloat(facEncontrada.total || facEncontrada.monto) : (parseFloat(monto) / listaFacturas.length);
 
-    if (dataMW.estado === 'exito' || dataMW.estado === 'success') {
+      const payloadMulti = {
+        token,
+        idfactura: idFac,
+        monto: montoFac,
+        pasarela: 'azul',
+        transaccion: `${azulOrderId || authorizationCode || 'AZUL-ONLINE'}-${idFac}`
+      };
+
+      console.log(`📡 Registrando sub-factura #${idFac} con monto RD$ ${montoFac}...`);
+
+      const resSub = await fetch(mikrowispEndpoint, {
+        method: 'POST',
+        headers: { 'accept': 'application/json', 'content-type': 'application/json' },
+        body: JSON.stringify(payloadMulti)
+      });
+
+      const dataSub = await resSub.json();
+
+      if (dataSub.estado === 'exito' || dataSub.estado === 'success') {
+        pagosExitosos++;
+      } else {
+        errores.push(`Error en factura #${idFac}: ${dataSub.mensaje || 'Error desconocido'}`);
+      }
+    }
+
+    if (pagosExitosos > 0) {
       return res.json({ 
         exito: true, 
-        mensaje: "Pago registrado y servicio activado en Mikrowisp." 
+        mensaje: `Se aplicaron ${pagosExitosos} de ${listaFacturas.length} facturas en Mikrowisp. Servicio actualizado.` 
       });
     } else {
       return res.status(400).json({ 
         exito: false, 
-        mensaje: dataMW.mensaje || "Error al aplicar el pago en Mikrowisp." 
+        mensaje: `No se pudieron registrar las facturas: ${errores.join(', ')}` 
       });
     }
 
