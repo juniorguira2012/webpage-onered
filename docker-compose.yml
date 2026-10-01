@@ -31,9 +31,6 @@ services:
       - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-ONERED JWG532, S.R.L.}
       - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
       - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
-
-      # CHATWOOT
-      - VITE_CHATWOOT_WEBSITE_TOKEN=coVW3GVVA4bpCSXrfLwGrJSo
       
       # URLS DE RETORNO
       - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://www.oneredrd.com/pago-completado}
