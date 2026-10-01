@@ -13,17 +13,65 @@ const app = express();
 app.set('trust proxy', 1);
 
 // 2. Configuración de Helmet permitiendo la redirección/submit a Azul
+// 2. Configuración de Helmet ajustada para Azul, Chatwoot, Umami y Google
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        // Permitir envíos de formularios hacia Azul (Pruebas y Producción)
+        
+        // Permite envíos de formularios a la pasarela de Azul
         "form-action": [
           "'self'", 
           "https://pruebas.azul.com.do", 
           "https://pagos.azul.com.do"
         ],
+        
+        // Permite cargar scripts externos (Chatwoot, Umami, Google)
+        "script-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          "https://chatone.oneredrd.com",
+          "https://cloud.umami.is",
+          "https://www.google.com"
+        ],
+
+        // Permite elementos de script en el DOM
+        "script-src-elem": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://chatone.oneredrd.com",
+          "https://cloud.umami.is",
+          "https://www.google.com"
+        ],
+
+        // Permite conexiones HTTP y WebSockets
+        "connect-src": [
+          "'self'",
+          "https://chatone.oneredrd.com",
+          "wss://chatone.oneredrd.com",
+          "https://cloud.umami.is",
+          "https://mikrowisp.oneredrd.com"
+        ],
+
+        // Permite la carga de IFrames
+        "frame-src": [
+          "'self'",
+          "https://chatone.oneredrd.com",
+          "https://www.google.com",
+          "https://pruebas.azul.com.do",
+          "https://pagos.azul.com.do"
+        ],
+
+        // Permite la carga de imágenes externas (como el SVG de WhatsApp)
+        "img-src": [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://upload.wikimedia.org",
+          "https://chatone.oneredrd.com"
+        ]
       },
     },
   })
