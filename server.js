@@ -6,10 +6,8 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
-import { useTranslation } from 'react-i18next';
 
 const app = express();
-const { t } = useTranslation();
 
 // 1. Confiar exactamente en el proxy inverso (Traefik)
 app.set('trust proxy', 1);
