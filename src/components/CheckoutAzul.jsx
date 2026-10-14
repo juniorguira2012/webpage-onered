@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CreditCard, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver, onProcederPago, cargando }) {
+  const { t } = useTranslation();
   const [aceptaPoliticas, setAceptaPoliticas] = useState(false);
 
   // Valores por defecto en caso de no recibir objeto de comercio por props
@@ -26,57 +28,61 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
         
         {/* Encabezado Checkout */}
         <div className="text-center space-y-1 mb-2">
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Checkout</h2>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+            {t('checkout_titulo', 'Checkout')}
+          </h2>
           <p className="text-xs text-slate-500 font-medium flex items-center justify-center gap-1">
             <ShieldCheck size={14} className="text-blue-600" />
-            Pago seguro de factura con autenticación 3D Secure
+            {t('checkout_seguridad_3d', 'Pago seguro de factura con autenticación 3D Secure')}
           </p>
         </div>
 
         {/* 1. SECCIÓN: Resumen de pago */}
         <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-4">
-          <h3 className="text-sm font-bold text-slate-900">Resumen de pago</h3>
+          <h3 className="text-sm font-bold text-slate-900">
+            {t('checkout_resumen_pago', 'Resumen de pago')}
+          </h3>
           
           <div className="space-y-2 text-xs">
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-medium">Cliente</span>
-              <span className="font-bold text-slate-900">{cliente?.nombre || 'Cliente'}</span>
+              <span className="text-slate-500 font-medium">{t('checkout_cliente', 'Cliente')}</span>
+              <span className="font-bold text-slate-900">{cliente?.nombre || t('checkout_cliente', 'Cliente')}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-medium">ID Cliente</span>
+              <span className="text-slate-500 font-medium">{t('checkout_id_cliente', 'ID Cliente')}</span>
               <span className="font-bold text-slate-900">#{cliente?.id}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-medium">Factura</span>
+              <span className="text-slate-500 font-medium">{t('checkout_factura', 'Factura')}</span>
               <span className="font-bold text-slate-900">#{factura?.idFactura}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-medium">Emitida</span>
+              <span className="text-slate-500 font-medium">{t('checkout_emitida', 'Emitida')}</span>
               <span className="font-semibold text-slate-700">{factura?.fechaEmision}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-medium">Vence</span>
+              <span className="text-slate-500 font-medium">{t('checkout_vence', 'Vence')}</span>
               <span className="font-semibold text-slate-700">{factura?.fechaVencimiento}</span>
             </div>
           </div>
 
           <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline">
-            <span className="text-xs font-bold text-slate-800">Total a pagar</span>
+            <span className="text-xs font-bold text-slate-800">{t('checkout_total_pagar', 'Total a pagar')}</span>
             <span className="text-xl font-black text-blue-600">
               RD$ {(factura?.monto || 0).toLocaleString('es-DO', { minimumFractionDigits: 2 })}
             </span>
           </div>
 
           <div className="flex justify-between items-center text-[10px] text-slate-400">
-            <span>Moneda</span>
-            <span>Pesos dominicanos (RD$ / DOP$)</span>
+            <span>{t('checkout_moneda', 'Moneda')}</span>
+            <span>{t('checkout_moneda_nombre', 'Pesos dominicanos (RD$ / DOP$)')}</span>
           </div>
         </div>
 
         {/* 2. SECCIÓN: Datos del comercio */}
         <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-2 text-xs">
           <h4 className="text-[11px] font-black uppercase tracking-wider text-slate-400 mb-2">
-            DATOS DEL COMERCIO
+            {t('checkout_datos_comercio', 'DATOS DEL COMERCIO')}
           </h4>
           <p className="font-bold text-slate-800">{comercioInfo.nombre}</p>
           <p className="text-slate-500">RNC {comercioInfo.rnc}</p>
@@ -88,14 +94,14 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
         {/* 3. SECCIÓN: Medios de pago aceptados */}
         <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm text-center space-y-3">
           <h4 className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-            MEDIOS DE PAGO ACEPTADOS
+            {t('checkout_medios_pago', 'MEDIOS DE PAGO ACEPTADOS')}
           </h4>
           <div className="flex justify-center items-center gap-6 py-2">
             <img src="/assets/images/visa.webp" alt="Visa" className="h-8 object-contain" />
             <img src="/assets/images/mastercardlogo.webp" alt="Mastercard" className="h-14 object-contain" />
             <img src="/assets/images/visalogo.webp" alt="Visa check" className="h-8 object-contain" />
             <img src="/assets/images/martercardcheck.webp" alt="Mastercard" className="h-9 object-contain" />
-            <img src="/assets/images/logo-azul.jpg" alt="Mastercard" className="h-10 object-contain" />
+            <img src="/assets/images/logo-azul.jpg" alt="Azul" className="h-10 object-contain" />
           </div>
         </div>
 
@@ -109,24 +115,26 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
               className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
             />
             <span className="text-[11px] text-slate-600 leading-relaxed">
-              He leído y acepto las{' '}
+              {t('checkout_politicas_texto_1', 'He leído y acepto las')}{' '}
               <a href="#politicas" className="text-blue-600 font-bold hover:underline">
-                Políticas de Devolución, Cancelación y Reembolso
-              </a>, la{' '}
+                {t('checkout_link_politicas', 'Políticas de Devolución, Cancelación y Reembolso')}
+              </a>, {t('checkout_politicas_texto_2', 'la')}{' '}
               <a href="#privacidad" className="text-blue-600 font-bold hover:underline">
-                Política de Privacidad
-              </a> y la{' '}
+                {t('checkout_link_privacidad', 'Política de Privacidad')}
+              </a> {t('checkout_politicas_texto_3', 'y la')}{' '}
               <a href="#seguridad" className="text-blue-600 font-bold hover:underline">
-                Política de Seguridad para Datos de Tarjetas
-              </a>. Entiendo que no se realizan devoluciones en efectivo y que los montos se procesan en Pesos dominicanos (RD$ / DOP$).
+                {t('checkout_link_seguridad', 'Política de Seguridad para Datos de Tarjetas')}
+              </a>. {t('checkout_politicas_texto_4', 'Entiendo que no se realizan devoluciones en efectivo y que los montos se procesan en Pesos dominicanos (RD$ / DOP$).')}
             </span>
           </label>
         </div>
 
         {/* Enlace opcional a modelo de recibo */}
         <p className="text-[10px] text-center text-slate-400">
-          Comprobante de ejemplo para cumplimiento:{' '}
-          <a href="#recibo" className="text-blue-600 underline font-medium">ver modelo de recibo</a>
+          {t('checkout_modelo_recibo_desc', 'Comprobante de ejemplo para cumplimiento:')}{' '}
+          <a href="#recibo" className="text-blue-600 underline font-medium">
+            {t('checkout_modelo_recibo_link', 'ver modelo de recibo')}
+          </a>
         </p>
 
         {/* 5. SECCIÓN: Botón Principal Redirección a Azul */}
@@ -136,7 +144,7 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
           className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
         >
           <CreditCard size={16} />
-          {cargando ? 'Redirigiendo a Azul...' : 'Pagar con Azul'}
+          {cargando ? t('checkout_btn_redirigiendo', 'Redirigiendo a Azul...') : t('checkout_btn_pagar', 'Pagar con Azul')}
         </button>
 
         {/* Botón Volver */}
@@ -145,7 +153,7 @@ export default function CheckoutAzul({ factura, cliente, datosComercio, onVolver
             onClick={onVolver}
             className="text-xs font-bold text-blue-600 hover:text-blue-800 transition inline-flex items-center gap-1"
           >
-            <ArrowLeft size={14} /> Volver a facturas
+            <ArrowLeft size={14} /> {t('checkout_btn_volver', 'Volver a facturas')}
           </button>
         </div>
 

@@ -6,8 +6,10 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import { useTranslation } from 'react-i18next';
 
 const app = express();
+const { t } = useTranslation();
 
 // 1. Confiar exactamente en el proxy inverso (Traefik)
 app.set('trust proxy', 1);
@@ -490,9 +492,9 @@ app.post('/api/facturas/consultar', async (req, res) => {
       listaFacturas.forEach(f => {
         const estadoFactura = String(f.estado || f.estado_num || '').toLowerCase();
         if (estadoFactura === '2' || estadoFactura === 'pagado' || estadoFactura === 'pagada') {
-          facturasPagadas.push(MapearFactura(f, 'pagado'));
+          facturasPagadas.push(MapearFactura(f, t('status_pagado', 'Pagado')));
         } else {
-          facturasPendientes.push(MapearFactura(f, 'no pagado'));
+          facturasPendientes.push(MapearFactura(f, t('status_no_pagado', 'No pagado')));
         }
       });
 

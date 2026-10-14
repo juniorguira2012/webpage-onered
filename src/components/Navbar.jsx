@@ -3,18 +3,19 @@ import { User, ShieldCheck, FileUp, Search, ExternalLink, Menu, CreditCard, X } 
 import logo from "/assets/logos/logo-onered.png";
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from "./LanguageSelector";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate para redirección
+import { useNavigate, useLocation } from "react-router-dom"; 
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
 
   const menuItems = [
-    { name: t('nav_inicio', 'Inicio'), href: '#' },
-    { name: t('nav_nosotros', 'Nosotros'), href: '#nosotros' },
-    { name: t('nav_cobertura', 'Cobertura'), href: '#cobertura' },
-    { name: t('nav_planes', 'Planes'), href: '#planes' },
-    { name: t('nav_contacto', 'Contacto'), href: '#contacto' },
+    { name: t('nav_inicio', 'Inicio'), target: '/' },
+    { name: t('nav_nosotros', 'Nosotros'), target: 'nosotros' },
+    { name: t('nav_cobertura', 'Cobertura'), target: 'cobertura' },
+    { name: t('nav_planes', 'Planes'), target: 'planes' },
+    { name: t('nav_contacto', 'Contacto'), target: 'contacto' },
   ];
 
   const [menuPagoOpen, setMenuPagoOpen] = useState(false);
@@ -39,11 +40,32 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleAbrirModalPago = (e) => {
+  // Función de navegación inteligente
+  const handleNavClick = (e, target) => {
     e.preventDefault();
-    setMenuPagoOpen(false);
     setMenuMovilOpen(false);
-    setModalPagoOpen(true);
+
+    if (target === '/') {
+      if (location.pathname !== '/') {
+        navigate('/');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      // Si estamos en /consulta-factura, navegamos a la raíz con el hash de la sección
+      navigate(`/#${target}`);
+    } else {
+      // Si ya estamos en la raíz, hacemos scroll a la sección directamente
+      const element = document.getElementById(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.hash = target;
+      }
+    }
   };
 
   // Función para procesar el envío e ir a la Pasarela de Azul
@@ -58,7 +80,6 @@ export default function Navbar() {
     setCargando(true);
 
     try {
-      // 1. Solicitar los datos firmados a tu servidor
       const res = await fetch('/api/pagos/crear-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,12 +98,10 @@ export default function Navbar() {
         return;
       }
 
-      // 2. Crear un formulario HTML dinámico para hacer POST hacia la URL de Azul
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = data.targetUrl;
 
-      // Inyectar inputs hidden con los valores devueltos por el backend
       Object.keys(data.formData).forEach((key) => {
         const input = document.createElement('input');
         input.type = 'hidden';
@@ -91,7 +110,6 @@ export default function Navbar() {
         form.appendChild(input);
       });
 
-      // 3. Adjuntar al body y hacer submit directo
       document.body.appendChild(form);
       form.submit();
 
@@ -115,7 +133,12 @@ export default function Navbar() {
             {menuMovilOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           
-          <a href="#" className="relative block group h-full flex items-center">
+          {/* Logo clickeable que siempre regresa a Inicio */}
+          <a 
+            href="/" 
+            onClick={(e) => handleNavClick(e, '/')}
+            className="relative block group h-full flex items-center"
+          >
             <img
               src={logo} 
               alt="OneRedRD Logo" 
@@ -128,11 +151,16 @@ export default function Navbar() {
         {/* Menú Central (Desktop) */}
         <div className="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest text-slate-500">
           {menuItems.map((item) => (
-            <a key={item.name} href={item.href} className="hover:text-blue-600 transition">
+            <a 
+              key={item.name} 
+              href={item.target === '/' ? '/' : `/#${item.target}`}
+              onClick={(e) => handleNavClick(e, item.target)}
+              className="hover:text-blue-600 transition cursor-pointer"
+            >
               {item.name}
             </a>
           ))}
-          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
+          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" target="_blank" rel="noreferrer" className="hover:text-blue-600 transition flex items-center gap-1">
             {t('nav_novedades', 'Novedades')} <ExternalLink size={12} className="opacity-50" />
           </a>
         </div>
@@ -148,18 +176,18 @@ export default function Navbar() {
               className="flex items-center gap-1 text-xs md:text-sm font-bold text-slate-700 hover:text-blue-600 transition p-1.5"
             >
               <div className="w-7 h-7 md:w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center transition-colors">
-                 <User size={14} className="md:size-[16px]" />
+                <User size={14} className="md:size-[16px]" />
               </div>
-              <span className="hidden sm:inline">{t('nav_mi_cuenta', 'Mi Cuenta')}</span>
+              <span className="hidden sm:inline">{t('nav_mi_cuenta', 'MI CUENTA')}</span>
             </button>
             
             <div className={`absolute right-0 mt-2 w-48 transition-all duration-300 origin-top-right ${menuCuentaOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
               <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 p-2">
-                <a href="https://mikrowisp.oneredrd.com/cliente/login" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
+                <a href="https://mikrowisp.oneredrd.com/cliente/login" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
                   <User size={18}/>
                   {t('nav_portal_clientes', 'Portal Clientes')}
                 </a>
-                <a href="https://mikrowisp.oneredrd.com/admin/login" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
+                <a href="https://mikrowisp.oneredrd.com/admin/login" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
                   <ShieldCheck size={18}/>
                   {t('nav_acceso_empleados', 'Acceso Empleados')}
                 </a>
@@ -174,30 +202,30 @@ export default function Navbar() {
               className="flex items-center gap-1 text-xs md:text-sm font-bold text-slate-700 hover:text-blue-600 transition p-1.5"
             >
               <CreditCard size={14} className="md:size-[16px]" />
-              {t('nav_pagar_ahora', 'PAGAR')}
+              {t('nav_pagar', 'PAGAR')}
             </button>
             
             <div className={`absolute right-0 mt-2 w-52 transition-all duration-300 origin-top-right ${menuPagoOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
               <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 p-2">
-                <a href="https://bot.oneredrd.com/aplicar-pago-shortcut" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
+                <a href="https://bot.oneredrd.com/aplicar-pago-shortcut" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
                   <FileUp size={18}/>
                   {t('nav_aplicar_comprobantes', 'Aplicar Comprobantes')}
                 </a>
-                <a href="https://bot.oneredrd.com/consultafactura-shortcut" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
+                <a href="https://bot.oneredrd.com/consultafactura-shortcut" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition">
                   <Search size={18}/>
                   {t('nav_verificar_factura', 'Verificar Factura')}
                 </a>
                 
-                {/* Opción Pagar Ahora -> Abre Modal de Azul */}
+                {/* Opción Pagar Ahora -> Redirige a /consulta-factura */}
                 <button 
                   onClick={() => {
                     setMenuPagoOpen(false);
-                    navigate('/consulta-factura'); // Redirige a la ruta
+                    navigate('/consulta-factura');
                   }}
                   className="w-full text-left flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase text-slate-600 hover:bg-blue-50 rounded-xl transition"
                 >
                   <CreditCard size={18}/>
-                  {t('nav_pagar_ahora', 'Pagar Con Tarjeta')}
+                  {t('nav_pagar_con_tarjeta', 'Pagar Con Tarjeta')}
                 </button>
               </div>
             </div>
@@ -211,14 +239,14 @@ export default function Navbar() {
           {menuItems.map((item) => (
             <a 
               key={item.name} 
-              href={item.href} 
-              onClick={() => setMenuMovilOpen(false)} 
-              className="py-2 border-b border-slate-50 hover:text-blue-600"
+              href={item.target === '/' ? '/' : `/#${item.target}`}
+              onClick={(e) => handleNavClick(e, item.target)}
+              className="py-2 border-b border-slate-50 hover:text-blue-600 cursor-pointer"
             >
               {item.name}
             </a>
           ))}
-          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" className="py-2 flex items-center justify-between hover:text-blue-600">
+          <a href="https://chatone.oneredrd.com/hc/onered/es_DO" target="_blank" rel="noreferrer" className="py-2 flex items-center justify-between hover:text-blue-600">
             {t('nav_novedades', 'Novedades')} <ExternalLink size={16} />
           </a>
         </div>

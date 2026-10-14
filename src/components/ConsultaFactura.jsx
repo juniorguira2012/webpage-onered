@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { ArrowLeft, CreditCard, FileText, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import logo from '/assets/logos/logo-onered.png';
 import CheckoutAzul from './CheckoutAzul'; 
 
 export default function ConsultaFactura() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [tipoBusqueda, setTipoBusqueda] = useState('id'); // 'id' o 'cedula'
   const [valorBusqueda, setValorBusqueda] = useState('');
@@ -17,7 +19,7 @@ export default function ConsultaFactura() {
   const [facturasPagadas, setFacturasPagadas] = useState([]);
   const [tabFacturas, setTabFacturas] = useState('pendientes');
 
-  // ESTADO PARA LA TRANSACCIÓN SELECCIONADA (Ahora consolida todo el balance)
+  // ESTADO PARA LA TRANSACCIÓN SELECCIONADA
   const [facturaSeleccionada, setFacturaSeleccionada] = useState(null);
 
   // Consultar cliente y facturas
@@ -43,11 +45,11 @@ export default function ConsultaFactura() {
         setFacturasPendientes(data.facturasPendientes || []);
         setFacturasPagadas(data.facturasPagadas || []);
       } else {
-        alert(data.mensaje || 'No se encontraron registros con estos datos.');
+        alert(data.mensaje || t('consult_no_encontrado', 'No se encontraron registros con estos datos.'));
       }
     } catch (error) {
       console.error('Error al consultar cliente:', error);
-      alert('Ocurrió un error al consultar el sistema de facturación.');
+      alert(t('consult_error_conexion', 'Ocurrió un error al consultar el sistema de facturación.'));
     } finally {
       setCargando(false);
     }
@@ -57,15 +59,14 @@ export default function ConsultaFactura() {
   const handleIniciarPagoTotal = () => {
     if (!facturasPendientes.length || !datosCliente) return;
 
-    // Crear un objeto de pago unificado que consolida todas las facturas
     const idsFacturas = facturasPendientes.map(f => f.idFactura);
     const montoTotal = datosCliente.totalPendiente;
 
     const objetoPagoConsolidado = {
-      idFactura: idsFacturas.join('-'), // Ej: "1050-1088"
+      idFactura: idsFacturas.join('-'),
       idsLista: idsFacturas,
       monto: montoTotal,
-      concepto: `Pago Total Balance Pendiente (${facturasPendientes.length} facturas)`,
+      concepto: `${t('consult_concepto_pago', 'Pago Total Balance Pendiente')} (${facturasPendientes.length} ${t('consult_facturas', 'facturas')})`,
       esConsolidado: facturasPendientes.length > 1
     };
 
@@ -76,7 +77,6 @@ export default function ConsultaFactura() {
   const handleProcederPagoAzul = async (objetoPago) => {
     if (!objetoPago || !datosCliente) return;
 
-    // Guardar datos temporales para cuando regrese la respuesta de Azul
     localStorage.setItem('pago_idFactura', objetoPago.idFactura);
     localStorage.setItem('pago_idCliente', datosCliente.id);
     localStorage.setItem('pago_monto', objetoPago.monto);
@@ -98,12 +98,11 @@ export default function ConsultaFactura() {
       const data = await res.json();
 
       if (!data.exito) {
-        alert(data.mensaje || 'Error al conectar con Azul.');
+        alert(data.mensaje || t('consult_error_azul', 'Error al conectar con Azul.'));
         setCargando(false);
         return;
       }
 
-      // Formulario dinámico POST hacia Azul
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = data.targetUrl;
@@ -121,12 +120,11 @@ export default function ConsultaFactura() {
       form.submit();
     } catch (error) {
       console.error('Error al redirigir a Azul:', error);
-      alert('Error de conexión con la pasarela de pago.');
+      alert(t('consult_error_azul_conexion', 'Error de conexión con la pasarela de pago.'));
       setCargando(false);
     }
   };
 
-  // VISTA CHECKOUT AZUL SI SE TIENE UN PAGO PENDIENTE SELECCIONADO
   if (facturaSeleccionada) {
     return (
       <CheckoutAzul
@@ -139,7 +137,6 @@ export default function ConsultaFactura() {
     );
   }
 
-  // VISTA HABITUAL DE CONSULTA Y LISTADO DE FACTURAS
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-between p-4 pb-8 pt-24 sm:pt-28">
       
@@ -148,7 +145,7 @@ export default function ConsultaFactura() {
         onClick={() => datosCliente ? setDatosCliente(null) : navigate('/')}
         className="mb-3 flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-200/80 shadow-sm transition-all hover:shadow-md"
       >
-        <ArrowLeft size={16} /> {datosCliente ? 'Volver a buscar' : 'Volver al inicio'}
+        <ArrowLeft size={16} /> {datosCliente ? t('btn_volver_buscar', 'Volver a buscar') : t('btn_volver_inicio', 'Volver al inicio')}
       </button>
 
       {/* Tarjeta Principal */}
@@ -162,15 +159,15 @@ export default function ConsultaFactura() {
           /* FORMULARIO DE BÚSQUEDA */
           <>
             <div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Consultar Facturas</h2>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('consult_titulo', 'Consultar Facturas')}</h2>
               <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                Consulta con tu ID de cliente o con la cédula que aparece en tu factura.
+                {t('consult_subtitulo', 'Consulta con tu ID de cliente o con la cédula que aparece en tu factura.')}
               </p>
             </div>
 
             <form onSubmit={handleConsultar} className="space-y-5 text-left">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">Buscar por</label>
+                <label className="block text-xs font-bold text-slate-700 mb-2">{t('consult_buscar_por', 'Buscar por')}</label>
                 <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
                   <button
                     type="button"
@@ -179,8 +176,8 @@ export default function ConsultaFactura() {
                       tipoBusqueda === 'id' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    ID de cliente
-                </button>
+                    {t('consult_opt_id', 'ID de cliente')}
+                  </button>
                   <button
                     type="button"
                     onClick={() => { setTipoBusqueda('cedula'); setValorBusqueda(''); }}
@@ -188,14 +185,14 @@ export default function ConsultaFactura() {
                       tipoBusqueda === 'cedula' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    Cédula / Pasaporte
+                    {t('consult_opt_cedula', 'Cédula / Pasaporte')}
                   </button>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {tipoBusqueda === 'id' ? 'ID de cliente' : 'Cédula / RNC / Pasaporte'}
+                  {tipoBusqueda === 'id' ? t('consult_label_id', 'ID de cliente') : t('consult_label_cedula', 'Cédula / RNC / Pasaporte')}
                 </label>
                 <input
                   type="text"
@@ -204,18 +201,19 @@ export default function ConsultaFactura() {
                   onChange={(e) => setValorBusqueda(e.target.value)}
                   placeholder={
                     tipoBusqueda === 'id' 
-                      ? 'Ej: 250' 
-                      : 'Ej: 001-0000000-0 o A1234567'
+                      ? t('consult_ph_id', 'Ej: 250') 
+                      : t('consult_ph_cedula', 'Ej: 001-0000000-0 o A1234567')
                   }
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
               </div>
+
               <button
                 type="submit"
                 disabled={cargando}
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {cargando ? 'Buscando...' : <><FileText size={16} /> Consultar mis facturas</>}
+                {cargando ? t('consult_btn_cargando', 'Buscando...') : <><FileText size={16} /> {t('consult_btn_buscar', 'Consultar mis facturas')}</>}
               </button>
             </form>
           </>
@@ -225,20 +223,20 @@ export default function ConsultaFactura() {
             <div className="space-y-0.5">
               <h3 className="text-xl font-black text-slate-900 tracking-tight">{datosCliente.nombre}</h3>
               <p className="text-xs font-medium text-slate-500">
-                Cliente #{datosCliente.id} · <span className="uppercase text-emerald-600 font-bold">{datosCliente.estado}</span> · {datosCliente.cedula}
+                {t('consult_cliente', 'Cliente')} #{datosCliente.id} · <span className="uppercase text-emerald-600 font-bold">{datosCliente.estado}</span> · {datosCliente.cedula}
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 text-center">
                 <span className="block text-2xl font-black text-slate-800">{datosCliente.cantSinPagar}</span>
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Sin pagar</span>
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">{t('consult_sin_pagar', 'Sin pagar')}</span>
               </div>
               <div className="bg-red-50/70 border border-red-100 rounded-2xl p-3.5 text-center">
                 <span className="block text-xl font-black text-red-700">
                   RD$ {datosCliente.totalPendiente.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
                 </span>
-                <span className="text-[11px] font-bold text-blue-600/90 uppercase tracking-wider">Total pendiente</span>
+                <span className="text-[11px] font-bold text-blue-600/90 uppercase tracking-wider">{t('consult_total_pendiente', 'Total pendiente')}</span>
               </div>
             </div>
 
@@ -247,20 +245,20 @@ export default function ConsultaFactura() {
               <div className="bg-blue-50/80 border border-blue-100 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center gap-2 text-blue-900 font-bold text-xs">
                   <ShieldCheck size={18} className="text-blue-600 shrink-0" />
-                  <span>Para reactivar o mantener el servicio debes pagar el balance total.</span>
+                  <span>{t('consult_alerta_reactivar', 'Para reactivar o mantener el servicio debes pagar el balance total.')}</span>
                 </div>
 
                 <button
                   onClick={handleIniciarPagoTotal}
                   className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
                 >
-                  <CreditCard size={18} /> Pagar Total RD$ {datosCliente.totalPendiente.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
+                  <CreditCard size={18} /> {t('consult_btn_pagar_total', 'Pagar Total')} RD$ {datosCliente.totalPendiente.toLocaleString('es-DO', { minimumFractionDigits: 2 })}
                 </button>
               </div>
             )}
 
             <div className="flex justify-between items-center pt-2">
-              <span className="text-xs font-black uppercase tracking-wider text-slate-400">Detalle de Facturas</span>
+              <span className="text-xs font-black uppercase tracking-wider text-slate-400">{t('consult_detalle_facturas', 'Detalle de Facturas')}</span>
               <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
                 <button
                   type="button"
@@ -269,7 +267,7 @@ export default function ConsultaFactura() {
                     tabFacturas === 'pendientes' ? 'bg-yellow-700 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Pendientes ({facturasPendientes.length})
+                  {t('consult_tab_pendientes', 'Pendientes')} ({facturasPendientes.length})
                 </button>
                 <button
                   type="button"
@@ -278,30 +276,32 @@ export default function ConsultaFactura() {
                     tabFacturas === 'pagadas' ? 'bg-green-600 text-white shadow-sm border border-slate-200/50' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Pagadas
+                  {t('consult_tab_pagadas', 'Pagadas')}
                 </button>
               </div>
             </div>
 
-            {/* PESTAÑA FACTURAS PENDIENTES (MODO SOLO LECTURA/DESGLOSE) */}
+            {/* PESTAÑA FACTURAS PENDIENTES */}
             {tabFacturas === 'pendientes' && (
               <div className="space-y-3">
                 {facturasPendientes.length === 0 ? (
                   <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 text-center text-xs text-slate-500 font-medium">
-                    No tienes facturas pendientes de pago.
+                    {t('consult_sin_facturas_pend', 'No tienes facturas pendientes de pago.')}
                   </div>
                 ) : (
                   facturasPendientes.map((fac) => (
                     <div key={fac.idFactura} className="border border-slate-200/80 rounded-2xl p-4 space-y-1 bg-white shadow-sm">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="font-bold text-slate-900 text-sm">Factura #{fac.idFactura}</h4>
+                          <h4 className="font-bold text-slate-900 text-sm">{t('consult_factura_num', 'Factura')} #{fac.idFactura}</h4>
                           <p className="text-[11px] text-slate-500 mt-0.5">
-                            Emitida: {fac.fechaEmision} · Vence: {fac.fechaVencimiento}
+                            {t('consult_emitida', 'Emitida')}: {fac.fechaEmision} · {t('consult_vence', 'Vence')}: {fac.fechaVencimiento}
                           </p>
                         </div>
+
+                        {/* 🔹 TRADUCCIÓN SOLO VISUAL DEL ESTADO (Sin modificar fac.estado) */}
                         <span className="text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-md uppercase tracking-wider border border-red-200">
-                          {fac.estado}
+                          {t(`status_${String(fac.estado).toLowerCase().replace(/\s+/g, '_')}`, fac.estado)}
                         </span>
                       </div>
 
@@ -313,24 +313,23 @@ export default function ConsultaFactura() {
                 )}
               </div>
             )}
-
             {/* PESTAÑA FACTURAS PAGADAS */}
             {tabFacturas === 'pagadas' && (
               <div className="space-y-3">
                 {facturasPagadas.length === 0 ? (
                   <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 text-center text-xs text-slate-500 font-medium">
-                    No hay registro de facturas pagadas en el sistema.
+                    {t('consult_sin_facturas_pag', 'No hay registro de facturas pagadas en el sistema.')}
                   </div>
                 ) : (
                   facturasPagadas.map((fac) => (
                     <div key={fac.idFactura} className="border border-slate-100 bg-slate-50/60 rounded-2xl p-4 space-y-1">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="font-bold text-slate-800 text-sm">Factura #{fac.idFactura}</h4>
-                          <p className="text-[11px] text-slate-500">Emitida: {fac.fechaEmision}</p>
+                          <h4 className="font-bold text-slate-800 text-sm">{t('consult_factura_num', 'Factura')} #{fac.idFactura}</h4>
+                          <p className="text-[11px] text-slate-500">{t('consult_emitida', 'Emitida')}: {fac.fechaEmision}</p>
                         </div>
                         <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md uppercase tracking-wider border border-emerald-100 flex items-center gap-1">
-                          <CheckCircle2 size={12} /> Pagada
+                          <CheckCircle2 size={12} /> {t('consult_estado_pagada', 'Pagada')}
                         </span>
                       </div>
 
