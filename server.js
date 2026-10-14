@@ -452,59 +452,59 @@ app.post('/api/facturas/consultar', async (req, res) => {
     const clienteNombre = cliente.nombre || `Cliente #${clienteId}`;
     const facturacion = cliente.facturacion || {};
 
-    const MapearFactura = (item, estadoTexto) => ({
-      idFactura: item.id || item.idfactura || item.IDFactura || item.factura || 'N/A',
-      monto: parseFloat(item.total || item.monto || item.valor || 0),
-      concepto: item.descripcion || item.detalle || item.concepto || 'Servicio de Internet',
-      fechaEmision: item.emitido || item.fecha_emision || item.fechagestion || item.fechaemision || item.fecha || 'N/A',
-      fechaVencimiento: item.vencimiento || item.fechavencimiento || item.fecha_vencimiento || 'N/A',
-      fechaPago: item.fechapago || item.fecha_pago || 'N/A',
-      estado: item.estado_texto || estadoTexto
-    });
+   const MapearFactura = (item, estadoTexto) => ({
+  idFactura: item.id || item.idfactura || item.IDFactura || item.factura || 'N/A',
+  monto: parseFloat(item.total || item.monto || item.valor || 0),
+  concepto: item.descripcion || item.detalle || item.concepto || 'Servicio de Internet',
+  fechaEmision: item.emitido || item.fecha_emision || item.fechagestion || item.fechaemision || item.fecha || 'N/A',
+  fechaVencimiento: item.vencimiento || item.fechavencimiento || item.fecha_vencimiento || 'N/A',
+  fechaPago: item.fechapago || item.fecha_pago || 'N/A',
+  estado: item.estado_texto || estadoTexto
+});
 
-    // 2. Consultar facturas con límite estricto desde Mikrowisp para máxima velocidad
-    let facturasPendientes = [];
-    let facturasPagadas = [];
+// 2. Consultar facturas con límite estricto desde Mikrowisp para máxima velocidad
+let facturasPendientes = [];
+let facturasPagadas = [];
 
-    try {
-      const respTodas = await fetch(`${baseUrl}/api/v1/GetInvoices`, {
-        method: 'POST',
-        headers: { 'accept': 'application/json', 'content-type': 'application/json' },
-        body: JSON.stringify({ token: tokenVal, idcliente: clienteId, limit: 10 })
-      });
+try {
+  const respTodas = await fetch(`${baseUrl}/api/v1/GetInvoices`, {
+    method: 'POST',
+    headers: { 'accept': 'application/json', 'content-type': 'application/json' },
+    body: JSON.stringify({ token: tokenVal, idcliente: clienteId, limit: 10 })
+  });
 
-      const dataTodas = await respTodas.json();
-      
-      let listaFacturas = [];
-      if (Array.isArray(dataTodas)) {
-        listaFacturas = dataTodas;
-      } else if (dataTodas && Array.isArray(dataTodas.facturas)) {
-        listaFacturas = dataTodas.facturas;
-      } else if (dataTodas && Array.isArray(dataTodas.datos)) {
-        listaFacturas = dataTodas.datos;
-      }
+  const dataTodas = await respTodas.json();
+  
+  let listaFacturas = [];
+  if (Array.isArray(dataTodas)) {
+    listaFacturas = dataTodas;
+  } else if (dataTodas && Array.isArray(dataTodas.facturas)) {
+    listaFacturas = dataTodas.facturas;
+  } else if (dataTodas && Array.isArray(dataTodas.datos)) {
+    listaFacturas = dataTodas.datos;
+  }
 
-      console.log(`📊 Facturas totales recuperadas de Mikrowisp para cliente #${clienteId}: ${listaFacturas.length}`);
+  console.log(`📊 Facturas totales recuperadas de Mikrowisp para cliente #${clienteId}: ${listaFacturas.length}`);
 
-      // Clasificar por estado
-      listaFacturas.forEach(f => {
-        const estadoFactura = String(f.estado || f.estado_num || '').toLowerCase();
-        if (estadoFactura === '2' || estadoFactura === 'pagado' || estadoFactura === 'pagada') {
-          facturasPagadas.push(MapearFactura(f, t('status_pagado', 'Pagado')));
-        } else {
-          facturasPendientes.push(MapearFactura(f, t('status_no_pagado', 'No pagado')));
-        }
-      });
-
-      // 🔹 ORDENAR Y LIMITAR A LAS ÚLTIMAS 5 FACTURAS PAGADAS
-      facturasPagadas.sort((a, b) => parseInt(b.idFactura) - parseInt(a.idFactura));
-      facturasPagadas = facturasPagadas.slice(0, 5);
-
-      console.log(`✅ Enviando al frontend: ${facturasPendientes.length} pendientes y ${facturasPagadas.length} pagadas.`);
-
-    } catch (e) {
-      console.error("❌ Error obteniendo facturas del cliente:", e);
+  // Clasificar por estado usando texto plano (SIN 't()')
+  listaFacturas.forEach(f => {
+    const estadoFactura = String(f.estado || f.estado_num || '').toLowerCase();
+    if (estadoFactura === '2' || estadoFactura === 'pagado' || estadoFactura === 'pagada') {
+      facturasPagadas.push(MapearFactura(f, 'pagado'));
+    } else {
+      facturasPendientes.push(MapearFactura(f, 'no pagado'));
     }
+  });
+
+  // 🔹 ORDENAR Y LIMITAR A LAS ÚLTIMAS 5 FACTURAS PAGADAS
+  facturasPagadas.sort((a, b) => parseInt(b.idFactura) - parseInt(a.idFactura));
+  facturasPagadas = facturasPagadas.slice(0, 5);
+
+  console.log(`✅ Enviando al frontend: ${facturasPendientes.length} pendientes y ${facturasPagadas.length} pagadas.`);
+
+} catch (e) {
+  console.error("❌ Error obteniendo facturas del cliente:", e);
+}
 
     // 3. Responder al Frontend
     return res.json({
