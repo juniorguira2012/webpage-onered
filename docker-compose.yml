@@ -22,12 +22,12 @@ services:
       
       # CONFIGURACIÓN MIKROWISP
       - MIKROWISP_URL=https://mikrowisp.oneredrd.com
-      - MIKROWISP_API_KEY=ZjBFQi8zbTEyL1pqKzhXb3hOUVBQUT09
+      - MIKROWISP_API_KEY=miappykey
       
       # ENTORNO Y PACA AZUL
       - AZUL_IS_TESTING=${AZUL_IS_TESTING:-false}
-      - AZUL_MERCHANT_ID=39038540035
-      - AZUL_AUTH_KEY=asdhakjshdkjasdasmndajksdkjaskldga8odya9d8yoasyd98asdyaisdhoaisyd0a8sydoashd8oasydoiahdpiashd09ayusidhaos8dy0a8dya08syd0a8ssdsax
+      - AZUL_MERCHANT_ID=mimerchaid
+      - AZUL_AUTH_KEY=myapikey
       - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-ONERED JWG532, S.R.L.}
       - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
       - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
