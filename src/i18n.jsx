@@ -167,7 +167,6 @@ i18n
             "footer_direccion": "Los Alcarrizos, Lebrón St. #60, Santo Domingo",
             "footer_rights": "All rights reserved.",
             "footer_privacidad": "Privacy",
-            "footer_terminos": "Terms",
 
             //--Factura azul
             "btn_volver_buscar": "Back to search",
@@ -241,11 +240,10 @@ i18n
             "footer_3ds_desc": "Online processing protected under the PCI-DSS standard and real-time identity validation with (Verified by Visa and Mastercard ID Check).",
             "footer_derechos": "All rights reserved.",
             "footer_terminos": "Terms of Service",
-            "footer_privacidad": "Privacy Policy",
+           // "footer_privacidad": "Privacy Policy",
             "footer_devoluciones": "Returns and Refunds",
             "footer_cerrar": "Close",
             "modal_close": "Close modal",
-            "footer_derechos": "All rights reserved.",
             "footer_seguridad_tarjetas": "Card Security",
             "footer_politica_entrega": "Delivery and Installation Policy",
             "footer_seguridad_tarjetas_desc": "All credit and debit card transactions are processed through the secure PCI-DSS certified gateway of Azul (Servicios Digitales Popular, Banco Popular Dominicano).",
@@ -257,7 +255,7 @@ i18n
             "returns_intro_suffix": ", transparency and customer satisfaction are essential. This document governs transactions, cancelations, returns, and refunds applied to payments processed through our digital gateway provided by ",
             "returns_sec1_title": "Applicable Statutory Taxes and Fees",
             "returns_sec1_desc": "All transactions processed via credit or debit card include statutory taxes regulated by the General Directorate of Internal Revenue (DGII) and the Dominican Telecommunications Institute (INDOTEL):",
-            "returns_tax_itbis": "Tax on Transfer of Processed Goods and Services (ITBIS - 18%).",
+            "returns_tax_itbis": "Tax on Transfer of Processed Goods and Ser vices (ITBIS - 18%).",
             "returns_tax_isc": "Selective Consumption Tax applied to telecommunication services (ISC - 10%).",
             "returns_tax_cdt": "Telecommunications Development Contribution (CDT - 2%, Law No. 153-98).",
             "returns_fiscal_note_label": "Tax Note:",
@@ -595,8 +593,10 @@ i18n
           "footer_contacto": "Contact",
           "footer_direccion": "Los Alcarrizos, Rue Lebrón #60, Saint-Domingue",
           "footer_rights": "Tous droits réservés.",
-          "footer_privacidad": "Confidentialité",
-          "footer_terminos": "Conditions",
+          //"footer_privacidad": "Confidentialité",
+          "footer_politica_entrega": "Politique de Livraison et d'Installation",
+          "footer_seguridad_tarjetas": "Sécurité des Cartes",
+          "footer_seguridad_tarjetas_desc": "Toutes les transactions par carte de crédit ou de débit sont traitées via la passerelle sécurisée certifiée PCI-DSS d'Azul (Servicios Digitales Popular, Banco Popular Dominicano).",
 
           //--Factura azul
           "btn_volver_buscar": "Retour à la recherche",
@@ -673,10 +673,8 @@ i18n
           "footer_devoluciones": "Retours et Remboursements",
           "footer_cerrar": "Fermer",
           "modal_close": "Fermer la modale",
-          "footer_derechos": "Tous droits réservés.",
-          "footer_seguridad_tarjetas": "Sécurité des Cartes",
-          "footer_politica_entrega": "Politique de Livraison et d'Installation",
-          "footer_seguridad_tarjetas_desc": "Toutes les transactions par carte de crédit ou de débit sont traitées via la passerelle sécurisée certifiée PCI-DSS d'Azul (Servicios Digitales Popular, Banco Popular Dominicano).",
+          //"footer_seguridad_tarjetas": "Sécurité des Cartes",
+
 
           //Devoluciones y reembolsos
           "returns_policy_title": "Politique de retours, d'annulations et de remboursements en ligne",
