@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    image: onered-web:v1.4.3
+    image: onered-web:v1.6.5
     networks:
       - network_public
     deploy:
@@ -10,32 +10,34 @@ services:
         condition: on-failure
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.web.rule=Host(`www.oneredrd.com`)"
+        # 🔹 Permite responder tanto a con www como sin www
+        - "traefik.http.routers.web.rule=Host(`www.oneredrd.com`) || Host(`oneredrd.com`)"
         - "traefik.http.routers.web.entrypoints=websecure"
         - "traefik.http.routers.web.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.web.loadbalancer.server.port=3000"
     
-    # 🔹 INYECCIÓN DE VARIABLES DE ENTORNO AL CONTENEDOR
+    # 🔹 INYECCIÓN DE VARIABLES DE ENTORNO
     environment:
       - PORT=3000
       - NODE_ENV=production
       
       # CONFIGURACIÓN MIKROWISP
       - MIKROWISP_URL=https://mikrowisp.oneredrd.com
-      - MIKROWISP_API_KEY=miappykey
+      - MIKROWISP_API_KEY=ZjBFQi8zbTEyL1pqKzhXb3hOUVBQUT09
       
       # ENTORNO Y PACA AZUL
-      - AZUL_IS_TESTING=${AZUL_IS_TESTING:-false}
-      - AZUL_MERCHANT_ID=mimerchaid
-      - AZUL_AUTH_KEY=myapikey
-      - AZUL_MERCHANT_NAME=${AZUL_MERCHANT_NAME:-ONERED JWG532, S.R.L.}
-      - AZUL_MERCHANT_TYPE=${AZUL_MERCHANT_TYPE:-Telecommunications}
-      - AZUL_CURRENCY_CODE=${AZUL_CURRENCY_CODE:-$}
-      
-      # URLS DE RETORNO
-      - AZUL_APPROVED_URL=${AZUL_APPROVED_URL:-https://www.oneredrd.com/pago-completado}
-      - AZUL_DECLINED_URL=${AZUL_DECLINED_URL:-https://www.oneredrd.com/pago-rechazado}
-      - AZUL_CANCEL_URL=${AZUL_CANCEL_URL:-https://www.oneredrd.com/consulta-factura}
+      - AZUL_IS_TESTING=false
+      - AZUL_ENV=production
+      - AZUL_MERCHANT_ID=39678260001
+      - AZUL_AUTH_KEY=RTuf2C7b8siSyifkjjmUqEVpopHS2OCDMhKOjdHXJBCJpPVhuvAtBDoF2Modu48bL7k8o2uo8qcjVrPi1BUMUJsVG25gcjxvSqaUpFqMzTtxoOyfJqDNqO9vujv2QGeD
+      - AZUL_MERCHANT_NAME=ONERED JWG532, S.R.L.
+      - AZUL_MERCHANT_TYPE=Telecommunications
+      - AZUL_CURRENCY_CODE=$$
+
+      # URLs DE RETORNO OFICIALES (Forzar exactitud con www)
+      - AZUL_APPROVED_URL=https://www.oneredrd.com/pago-completado
+      - AZUL_DECLINED_URL=https://www.oneredrd.com/pago-rechazado
+      - AZUL_CANCEL_URL=https://www.oneredrd.com/consulta-factura
 
 networks:
   network_public:
