@@ -29,6 +29,9 @@ yarn-error.log*
 *.sw?
 node_modules
 
+# Environment files
+docker-compose.yml
+
 # Environment variables - SECURITY: never commit .env files
 .env
 .env.*

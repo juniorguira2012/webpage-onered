@@ -305,6 +305,8 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
         idfactura: listaFacturas[0],
         monto: parseFloat(monto),
         pasarela: 'azul',
+        tipopago: 'tarjeta', // 👈 Añadido para clasificar como Tarjeta de Crédito/Débito
+        formapago: 'Tarjetas',
         transaccion: azulOrderId || authorizationCode || 'AZUL-ONLINE'
       };
 
@@ -352,6 +354,8 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
         idfactura: idFac,
         monto: montoFac,
         pasarela: 'azul',
+        tipopago: 'tarjeta',
+        formapago: 'Tarjetas',
         transaccion: `${azulOrderId || authorizationCode || 'AZUL-ONLINE'}-${idFac}`
       };
 
