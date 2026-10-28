@@ -304,8 +304,8 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
         token,
         idfactura: listaFacturas[0],
         monto: parseFloat(monto),
-        pasarela: 'azul',
-        ipopago: 'TARJETA CREDITO / DEBITO',
+        pasarela: 'TARJETA CREDITO / DEBITO',
+        ipopago: 'azul',
         transaccion: azulOrderId || authorizationCode || 'AZUL-ONLINE'
       };
 
@@ -352,8 +352,8 @@ app.post('/api/pagos/confirmar-mikrowisp', async (req, res) => {
         token,
         idfactura: idFac,
         monto: montoFac,
-        pasarela: 'azul',
-        ipopago: 'TARJETA CREDITO / DEBITO',
+        pasarela: 'TARJETA CREDITO / DEBITO',
+        ipopago: 'azul',
         transaccion: `${azulOrderId || authorizationCode || 'AZUL-ONLINE'}-${idFac}`
       };
 
